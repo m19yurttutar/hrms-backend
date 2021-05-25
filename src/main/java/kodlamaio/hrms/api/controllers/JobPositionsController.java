@@ -1,11 +1,14 @@
 package kodlamaio.hrms.api.controllers;
 
-import kodlamaio.hrms.business.abstracts.JobPositionService;
-import kodlamaio.hrms.entities.concretes.JobPosition;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
+import kodlamaio.hrms.business.abstracts.JobPositionService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.entities.concretes.JobPosition;
 
 @RestController
 @RequestMapping("/api/jobpositions")
@@ -13,32 +16,28 @@ public class JobPositionsController {
 
     private JobPositionService jobPositionService;
 
-    public JobPositionsController(JobPositionService jobPositionService) {
-        this.jobPositionService = jobPositionService;
-    }
+    @Autowired
+    public JobPositionsController(JobPositionService jobPositionService) { this.jobPositionService = jobPositionService; }
 
     @GetMapping("/getall")
-    public List<JobPosition> getAll(){
+    public DataResult<List<JobPosition>> getAll(){
         return jobPositionService.getAll();
     }
 
-    @GetMapping("/get/{id}")
-    public Optional<JobPosition> get(@PathVariable int id){
-        return jobPositionService.get(id);
-    }
-
     @PostMapping("/add")
-    public void add(@RequestBody JobPosition jobPosition){
-        jobPositionService.add(jobPosition);
+    public Result add(@RequestBody JobPosition jobPosition){
+        return jobPositionService.add(jobPosition);
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody JobPosition jobPosition){
-        jobPositionService.delete(jobPosition);
+    public Result delete(@RequestBody JobPosition jobPosition){
+        return jobPositionService.delete(jobPosition);
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody JobPosition jobPosition){
-        jobPositionService.update(jobPosition);
+    public Result update(@RequestBody JobPosition jobPosition){
+        return jobPositionService.update(jobPosition);
     }
+
+
 }

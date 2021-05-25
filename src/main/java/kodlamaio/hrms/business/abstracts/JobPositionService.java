@@ -1,14 +1,14 @@
 package kodlamaio.hrms.business.abstracts;
 
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.JobPosition;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface JobPositionService {
-    Optional<JobPosition> get(int id);
-    List<JobPosition> getAll();
-    void add(JobPosition jobPosition);
-    void delete(JobPosition jobPosition);
-    void update(JobPosition jobPosition);
+    DataResult<List<JobPosition>> getAll();
+    Result add(JobPosition jobPosition);
+    Result delete(JobPosition jobPosition);
+    Result update(JobPosition jobPosition);
 }
