@@ -2,6 +2,7 @@ package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.AuthService;
 
+import kodlamaio.hrms.entities.DTOs.EmployerForRegisterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,13 +16,22 @@ import kodlamaio.hrms.entities.DTOs.JobSeekerForRegisterDto;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private AuthService authService;
+    private AuthService<JobSeekerForRegisterDto> jobSeekerForRegisterDtoAuthService;
+    private AuthService<EmployerForRegisterDto> employerForRegisterDtoAuthService;
 
     @Autowired
-    public AuthController(AuthService authService) { this.authService = authService; }
+    public AuthController(AuthService<JobSeekerForRegisterDto> jobSeekerForRegisterDtoAuthService, AuthService<EmployerForRegisterDto> employerForRegisterDtoAuthService) {
+        this.jobSeekerForRegisterDtoAuthService = jobSeekerForRegisterDtoAuthService;
+        this.employerForRegisterDtoAuthService = employerForRegisterDtoAuthService;
+    }
 
-    @PostMapping("/register")
-    public Result register(@RequestBody JobSeekerForRegisterDto jobSeekerForRegisterDto, String confirmPassword){
-        return authService.register(jobSeekerForRegisterDto, confirmPassword);
+    @PostMapping("/jobseekerregister")
+    public Result jobSeekerRegister(@RequestBody JobSeekerForRegisterDto jobSeekerForRegisterDto, String confirmPassword){
+        return jobSeekerForRegisterDtoAuthService.register(jobSeekerForRegisterDto, confirmPassword);
+    }
+
+    @PostMapping("/employerregister")
+    public Result employerRegister(@RequestBody EmployerForRegisterDto employerForRegisterDto, String confirmPassword){
+        return employerForRegisterDtoAuthService.register(employerForRegisterDto, confirmPassword);
     }
 }

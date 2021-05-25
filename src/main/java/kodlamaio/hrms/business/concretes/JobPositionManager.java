@@ -32,7 +32,7 @@ public class JobPositionManager implements JobPositionService {
 
         Result businessResult = BusinessRules.run(CheckIfJobPositionExists(jobPosition.getJobPositionName()));
 
-        if (!businessResult.isSuccess()){
+        if (businessResult != null){
             return businessResult;
         }
 

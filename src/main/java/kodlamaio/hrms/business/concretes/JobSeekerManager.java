@@ -1,5 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
+import kodlamaio.hrms.core.utilities.adapters.VerificationAdapter;
+import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,18 +30,21 @@ public class JobSeekerManager implements JobSeekerService {
 
     @Override
     public DataResult<JobSeeker> getByNationalIdentity(String nationalIdentity) {
-        List<JobSeeker> jobSeekers = jobSeekerDao.findAll();
-
-        for(JobSeeker jobSeeker : jobSeekers){
-            if (jobSeeker.getNationalIdentity().equals(nationalIdentity)){
-                return new SuccessDataResult<>(jobSeeker, Messages.jobSeekerListed);
-            }
-        }
-        return new ErrorDataResult<>("Bu kimlik numarasına sahip hesap bulunamadı.");
+        return new SuccessDataResult<>(jobSeekerDao.getByNationalIdentity(nationalIdentity), Messages.jobSeekerListed);
     }
 
     @Override
     public Result add(JobSeeker jobSeeker) {
+
+        Result businessResult = BusinessRules.run(CheckIfNationalIdentityExists(jobSeeker.getNationalIdentity()));
+        Result emailVerificationResult = VerificationAdapter.EmailVerification();
+
+        if (businessResult != null){
+            return businessResult;
+        }else if(!emailVerificationResult.isSuccess()){
+            return emailVerificationResult;
+        }
+
         jobSeekerDao.save(jobSeeker);
         return new SuccessResult(Messages.jobSeekerAdded);
     }
@@ -54,5 +59,14 @@ public class JobSeekerManager implements JobSeekerService {
     public Result update(JobSeeker jobSeeker) {
         jobSeekerDao.save(jobSeeker);
         return new SuccessResult(Messages.jobSeekerUpdated);
+    }
+
+    private Result CheckIfNationalIdentityExists(String nationalIdentity) {
+        var result = getByNationalIdentity(nationalIdentity).getData();
+
+        if (result == null) {
+            return new SuccessResult();
+        }
+        return new ErrorResult("Bu kimlik numarası daha önce kullanılmış.");
     }
 }
