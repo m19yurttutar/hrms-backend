@@ -1,7 +1,9 @@
 package kodlamaio.hrms.business.concretes;
 
+import kodlamaio.hrms.business.validationRules.Validator;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
+import kodlamaio.hrms.core.utilities.validation.ValidationRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,16 +30,14 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public DataResult<User> getByEmail(String email) {
-        return new SuccessDataResult<>(userDao.getByEmail(email), Messages.userListed);
-    }
-
-    @Override
     public Result add(User user) {
 
+        Result validationResult = ValidationRules.run(Validator.AreFieldsFull(user.getEmail(),user.getPassword()));
         Result businessResult = BusinessRules.run(CheckIfEmailExists(user.getEmail()));
 
-        if (businessResult != null){
+        if(validationResult != null){
+            return validationResult;
+        }else if (businessResult != null){
             return businessResult;
         }
 
@@ -58,11 +58,11 @@ public class UserManager implements UserService {
     }
 
     private Result CheckIfEmailExists(String email) {
-        var result = this.getByEmail(email).getData();
+        var result = userDao.getByEmail(email);
 
-        if (result == null) {
-            return new SuccessResult();
+        if (result != null) {
+            return new ErrorResult("Bu email adresi daha önce kullanılmış.");
         }
-        return new ErrorResult("Bu email adresi daha önce kullanılmış.");
+        return new SuccessResult();
     }
 }

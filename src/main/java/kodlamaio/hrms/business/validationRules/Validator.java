@@ -4,11 +4,16 @@ import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 
-public class AuthValidator {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Validator {
     public static Result AreFieldsFull(String... fields){
         for (String field : fields){
-            if (field.isEmpty() || field == null){
+            if (field == null){
                 return new ErrorResult("İstenilen alanlar boş bırakılamaz.");
+            }else if (field.isEmpty()){
+
             }
         }
         return new SuccessResult();
@@ -30,6 +35,16 @@ public class AuthValidator {
                 return new ErrorResult("Email adresi ile websitesi farklı domainlere sahip.");
             }
             return new SuccessResult();
+        }
+        return new SuccessResult();
+    }
+
+    public static Result IsEmailInEmailFormat(String email){
+        Pattern pattern = Pattern.compile("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
+        Matcher matcher = pattern.matcher(email);
+
+        if (!matcher.find()){
+            return new ErrorResult("Girmiş olduğunuz email adresi, email formatında değil.");
         }
         return new SuccessResult();
     }

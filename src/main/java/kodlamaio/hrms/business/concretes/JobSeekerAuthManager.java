@@ -1,66 +1,42 @@
 package kodlamaio.hrms.business.concretes;
 
-import kodlamaio.hrms.business.validationRules.AuthValidator;
-import kodlamaio.hrms.core.utilities.adapters.MernisAdapter;
+import kodlamaio.hrms.business.abstracts.AuthService;
+import kodlamaio.hrms.business.abstracts.JobSeekerService;
+import kodlamaio.hrms.business.validationRules.Validator;
+import kodlamaio.hrms.core.utilities.adapters.VerificationAdapter;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.validation.ValidationRules;
-import kodlamaio.hrms.entities.DTOs.UserForLoginDto;
+import kodlamaio.hrms.core.utilities.verification.VerificationRules;
+import kodlamaio.hrms.entities.concretes.JobSeeker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kodlamaio.hrms.business.abstracts.AuthService;
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
-import kodlamaio.hrms.business.abstracts.UserService;
-import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.entities.DTOs.JobSeekerForRegisterDto;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
-import kodlamaio.hrms.entities.concretes.User;
-
 @Service
-public class JobSeekerAuthManager implements AuthService<JobSeekerForRegisterDto> {
+public class JobSeekerAuthManager implements AuthService<JobSeeker> {
 
-    private UserService userService;
     private JobSeekerService jobSeekerService;
 
     @Autowired
-    public JobSeekerAuthManager(UserService userService, JobSeekerService jobSeekerService) {
-        this.userService = userService;
+    public JobSeekerAuthManager(JobSeekerService jobSeekerService){
         this.jobSeekerService = jobSeekerService;
     }
 
     @Override
-    public Result register(JobSeekerForRegisterDto registerDto, String confirmPassword) {
+    public Result register(JobSeeker jobSeeker, String confirmPassword) {
 
-        Result validationResult = ValidationRules.run(AuthValidator.AreFieldsFull(
-                registerDto.getFirstName(),
-                registerDto.getLastName(),
-                String.valueOf(registerDto.getBirthYear()),
-                registerDto.getNationalIdentityNumber(),
-                registerDto.getEmail(),
-                registerDto.getPassword(),
-                confirmPassword),
-                AuthValidator.IsPasswordSameAsConfirmPassword(registerDto.getPassword(), confirmPassword));
+        Result validationResult = ValidationRules.run(
+                Validator.AreFieldsFull(jobSeeker.getFirstName(), jobSeeker.getLastName(), jobSeeker.getNationalIdentity(), jobSeeker.getEmail(), jobSeeker.getPassword(), confirmPassword),
+                Validator.IsEmailInEmailFormat(jobSeeker.getEmail()),
+                Validator.IsPasswordSameAsConfirmPassword(jobSeeker.getPassword(),confirmPassword));
 
-        Result mernisResult = MernisAdapter.CheckIfRealPerson(registerDto.getNationalIdentityNumber());
+        Result verificationResult = VerificationRules.run(VerificationAdapter.MernisVerification(jobSeeker.getNationalIdentity()), VerificationAdapter.EmailVerification());
 
-        if (validationResult != null) {
+        if (validationResult != null){
             return validationResult;
-        } else if(mernisResult != null){
-            return mernisResult;
-        }else {
-            User user = new User();
-            user.setEmail(registerDto.getEmail());
-            user.setPassword(registerDto.getPassword());
-            userService.add(user);
-            int newUserId = userService.getByEmail(registerDto.getEmail()).getData().getId();
-            JobSeeker jobSeeker = new JobSeeker(newUserId, registerDto.getNationalIdentityNumber(), registerDto.getFirstName(), registerDto.getLastName(), registerDto.getBirthYear());
-            jobSeekerService.add(jobSeeker);
-            return new SuccessResult();
+        }else if (verificationResult != null){
+            return verificationResult;
         }
-    }
 
-    @Override
-    public Result login(UserForLoginDto userForLoginDto) {
-        return null;
+        return this.jobSeekerService.add(jobSeeker);
     }
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -23,9 +24,4 @@ public class User {
 
     @Column(name = "password")
     private String password;
-
-    public User(String email, String password){
-        this.email = email;
-        this.password = password;
-    }
 }

@@ -2,23 +2,19 @@ package kodlamaio.hrms.entities.concretes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "employers")
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
+@PrimaryKeyJoinColumn(name = "user_id")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employer {
-
-    @Id
-    @Column(name = "user_id")
-    private int userId;
+public class Employer extends User{
 
     @Column(name = "company_name")
     private String companyName;

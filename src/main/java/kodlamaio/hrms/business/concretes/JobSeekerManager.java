@@ -36,13 +36,10 @@ public class JobSeekerManager implements JobSeekerService {
     @Override
     public Result add(JobSeeker jobSeeker) {
 
-        Result businessResult = BusinessRules.run(CheckIfNationalIdentityExists(jobSeeker.getNationalIdentity()));
-        Result emailVerificationResult = VerificationAdapter.EmailVerification();
+        Result businessResult = BusinessRules.run(CheckIfNationalIdentityExists(jobSeeker.getNationalIdentity()),CheckIfEmailExists(jobSeeker.getEmail()));
 
         if (businessResult != null){
             return businessResult;
-        }else if(!emailVerificationResult.isSuccess()){
-            return emailVerificationResult;
         }
 
         jobSeekerDao.save(jobSeeker);
@@ -68,5 +65,14 @@ public class JobSeekerManager implements JobSeekerService {
             return new SuccessResult();
         }
         return new ErrorResult("Bu kimlik numarası daha önce kullanılmış.");
+    }
+
+    private Result CheckIfEmailExists(String email) {
+        var result = jobSeekerDao.getByEmail(email);
+
+        if (result == null) {
+            return new SuccessResult();
+        }
+        return new ErrorResult("Bu email adresi daha önce kullanılmış.");
     }
 }
