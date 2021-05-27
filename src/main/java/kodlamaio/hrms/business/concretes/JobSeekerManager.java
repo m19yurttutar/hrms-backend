@@ -29,14 +29,9 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
     @Override
-    public DataResult<JobSeeker> getByNationalIdentity(String nationalIdentity) {
-        return new SuccessDataResult<>(jobSeekerDao.getByNationalIdentity(nationalIdentity), Messages.jobSeekerListed);
-    }
-
-    @Override
     public Result add(JobSeeker jobSeeker) {
 
-        Result businessResult = BusinessRules.run(CheckIfNationalIdentityExists(jobSeeker.getNationalIdentity()),CheckIfEmailExists(jobSeeker.getEmail()));
+        Result businessResult = BusinessRules.run(CheckIfNationalIdentityExists(jobSeeker.getNationalIdentityNumber()),CheckIfEmailExists(jobSeeker.getEmail()));
 
         if (businessResult != null){
             return businessResult;
@@ -58,8 +53,8 @@ public class JobSeekerManager implements JobSeekerService {
         return new SuccessResult(Messages.jobSeekerUpdated);
     }
 
-    private Result CheckIfNationalIdentityExists(String nationalIdentity) {
-        var result = getByNationalIdentity(nationalIdentity).getData();
+    private Result CheckIfNationalIdentityExists(String nationalIdentityNumber) {
+        var result = jobSeekerDao.getByNationalIdentityNumber(nationalIdentityNumber);
 
         if (result == null) {
             return new SuccessResult();

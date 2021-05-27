@@ -8,12 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
-    public static Result AreFieldsFull(String... fields){
-        for (String field : fields){
+    public static Result AreFieldsFull(Object... fields){
+        for (Object field : fields){
             if (field == null){
                 return new ErrorResult("İstenilen alanlar boş bırakılamaz.");
-            }else if (field.isEmpty()){
-
             }
         }
         return new SuccessResult();

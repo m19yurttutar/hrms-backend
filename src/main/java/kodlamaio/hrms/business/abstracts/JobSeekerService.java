@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface JobSeekerService {
     DataResult<List<JobSeeker>> getAll();
-    DataResult<JobSeeker> getByNationalIdentity(String nationalIdentity);
     Result add(JobSeeker jobSeeker);
     Result delete(JobSeeker jobSeeker);
     Result update(JobSeeker jobSeeker);

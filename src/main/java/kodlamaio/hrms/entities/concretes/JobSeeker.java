@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Table(name = "job_seekers")
 @Entity
@@ -17,8 +18,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class JobSeeker extends User{
 
-    @Column(name = "national_identity")
-    private String nationalIdentity;
+    @Column(name = "national_identity_number")
+    private String nationalIdentityNumber;
 
     @Column(name = "first_name")
     private String firstName;
@@ -26,6 +27,6 @@ public class JobSeeker extends User{
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "birth_year")
-    private int birthYear;
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 }

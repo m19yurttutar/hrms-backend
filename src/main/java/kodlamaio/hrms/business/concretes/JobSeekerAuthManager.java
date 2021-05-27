@@ -9,6 +9,7 @@ import kodlamaio.hrms.core.utilities.validation.ValidationRules;
 import kodlamaio.hrms.core.utilities.verification.VerificationRules;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,15 +26,17 @@ public class JobSeekerAuthManager implements AuthService<JobSeeker> {
     public Result register(JobSeeker jobSeeker, String confirmPassword) {
 
         Result validationResult = ValidationRules.run(
-                Validator.AreFieldsFull(jobSeeker.getFirstName(), jobSeeker.getLastName(), jobSeeker.getNationalIdentity(), jobSeeker.getEmail(), jobSeeker.getPassword(), confirmPassword),
+                Validator.AreFieldsFull(jobSeeker.getFirstName(), jobSeeker.getLastName(), jobSeeker.getNationalIdentityNumber(), jobSeeker.getBirthDate(), jobSeeker.getEmail(), jobSeeker.getPassword(), confirmPassword),
                 Validator.IsEmailInEmailFormat(jobSeeker.getEmail()),
                 Validator.IsPasswordSameAsConfirmPassword(jobSeeker.getPassword(),confirmPassword));
 
-        Result verificationResult = VerificationRules.run(VerificationAdapter.MernisVerification(jobSeeker.getNationalIdentity()), VerificationAdapter.EmailVerification());
-
         if (validationResult != null){
             return validationResult;
-        }else if (verificationResult != null){
+        }
+
+        Result verificationResult = VerificationRules.run(VerificationAdapter.MernisVerification(jobSeeker.getNationalIdentityNumber()), VerificationAdapter.EmailVerification());
+
+        if (verificationResult != null){
             return verificationResult;
         }
 

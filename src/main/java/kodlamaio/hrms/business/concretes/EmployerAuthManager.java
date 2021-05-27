@@ -9,6 +9,8 @@ import kodlamaio.hrms.core.utilities.validation.ValidationRules;
 import kodlamaio.hrms.core.utilities.verification.VerificationRules;
 import kodlamaio.hrms.entities.concretes.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,11 +33,13 @@ public class EmployerAuthManager implements AuthService<Employer> {
                 Validator.IsPasswordSameAsConfirmPassword(employer.getPassword(), confirmPassword)
         );
 
-        Result verificationResult = VerificationRules.run(VerificationAdapter.EmailVerification(), VerificationAdapter.SystemEmployeesVerification());
-
         if (validationResult != null) {
             return validationResult;
-        } else if (verificationResult != null) {
+        }
+
+        Result verificationResult = VerificationRules.run(VerificationAdapter.EmailVerification(), VerificationAdapter.SystemEmployeesVerification());
+
+         if (verificationResult != null) {
             return verificationResult;
         }
 
