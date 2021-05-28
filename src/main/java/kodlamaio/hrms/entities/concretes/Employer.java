@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Table(name = "employers")
+
 @Entity
+@Table(name = "employers")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @PrimaryKeyJoinColumn(name = "user_id")

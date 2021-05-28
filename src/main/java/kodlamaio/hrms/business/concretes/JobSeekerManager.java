@@ -56,18 +56,18 @@ public class JobSeekerManager implements JobSeekerService {
     private Result CheckIfNationalIdentityExists(String nationalIdentityNumber) {
         var result = jobSeekerDao.getByNationalIdentityNumber(nationalIdentityNumber);
 
-        if (result == null) {
-            return new SuccessResult();
+        if (result != null) {
+            return new ErrorResult("Bu kimlik numarası daha önce kullanılmış.");
         }
-        return new ErrorResult("Bu kimlik numarası daha önce kullanılmış.");
+        return new SuccessResult();
     }
 
     private Result CheckIfEmailExists(String email) {
         var result = jobSeekerDao.getByEmail(email);
 
-        if (result == null) {
-            return new SuccessResult();
+        if (result != null) {
+            return new ErrorResult("Bu email adresi daha önce kullanılmış.");
         }
-        return new ErrorResult("Bu email adresi daha önce kullanılmış.");
+        return new SuccessResult();
     }
 }

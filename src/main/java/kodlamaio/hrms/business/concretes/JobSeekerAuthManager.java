@@ -9,7 +9,6 @@ import kodlamaio.hrms.core.utilities.validation.ValidationRules;
 import kodlamaio.hrms.core.utilities.verification.VerificationRules;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

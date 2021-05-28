@@ -55,9 +55,9 @@ public class EmployerManager implements EmployerService {
     private Result CheckIfEmailExists(String email) {
         var result = employerDao.getByEmail(email);
 
-        if (result == null) {
-            return new SuccessResult();
+        if (result != null) {
+            return new ErrorResult("Bu email adresi daha önce kullanılmış.");
         }
-        return new ErrorResult("Bu email adresi daha önce kullanılmış.");
+        return new SuccessResult();
     }
 }

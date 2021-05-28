@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
-@Table(name="job_positions")
 @Entity
+@Table(name="job_positions")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobPosition {

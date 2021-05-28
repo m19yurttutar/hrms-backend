@@ -53,12 +53,10 @@ public class JobPositionManager implements JobPositionService {
     }
 
     private Result CheckIfJobPositionExists(String jobPositionName){
-        var jobPositions = jobPositionDao.findAll();
+        var result = jobPositionDao.getByJobPositionName(jobPositionName);
 
-        for (JobPosition jobPosition: jobPositions){
-            if (jobPosition.getJobPositionName().equals(jobPositionName)){
-                return new ErrorResult("Bu pozisyon adı zaten bulunmaktadır.");
-            }
+        if (result != null){
+            return new ErrorResult("Bu pozisyon adı zaten bulunmaktadır.");
         }
         return new SuccessResult();
     }
