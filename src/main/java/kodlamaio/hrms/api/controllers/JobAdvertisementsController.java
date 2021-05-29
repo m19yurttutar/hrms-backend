@@ -1,10 +1,9 @@
 package kodlamaio.hrms.api.controllers;
 
-import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.abstracts.JobAdvertisementService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.Employer;
+import kodlamaio.hrms.entities.DTOs.JobAdvertisementDto;
 import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,13 +34,13 @@ public class JobAdvertisementsController {
     }
 
     @GetMapping("/getByEmployerIdAndActivityStatus")
-    public DataResult<List<JobAdvertisement>> getByEmployer_IdAndActivityStatus(@RequestParam int employerId){
+    public DataResult<List<JobAdvertisement>> getByEmployer_IdAndActivityStatus(@RequestParam Integer employerId){
         return jobAdvertisementService.getByEmployer_IdAndActivityStatus(employerId);
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody JobAdvertisement jobAdvertisement){
-        return jobAdvertisementService.add(jobAdvertisement);
+    public Result add(@RequestBody JobAdvertisementDto jobAdvertisementDto){
+        return jobAdvertisementService.add(jobAdvertisementDto);
     }
 
     @DeleteMapping("/delete")

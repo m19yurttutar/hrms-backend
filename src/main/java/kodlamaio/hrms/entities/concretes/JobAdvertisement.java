@@ -47,7 +47,7 @@ public class JobAdvertisement {
     private int maxSalary;
 
     @Column(name = "vacant_position_count")
-    private Integer vacantPositionCount;
+    private int vacantPositionCount;
 
     @Column(name = "release_date")
     private LocalDate releaseDate;
@@ -57,4 +57,17 @@ public class JobAdvertisement {
 
     @Column(name = "activity_status")
     private boolean activityStatus;
+
+    public JobAdvertisement(Employer employer, JobPosition jobPosition, String jobDescription, City city, int minSalary, int maxSalary, int vacantPositionCount, LocalDate releaseDate, LocalDate applicationDeadline, boolean activityStatus) {
+        this.employer = employer;
+        this.jobPosition = jobPosition;
+        this.jobDescription = jobDescription;
+        this.city = city;
+        this.minSalary = minSalary;
+        this.maxSalary = maxSalary;
+        this.vacantPositionCount = vacantPositionCount;
+        this.releaseDate = releaseDate;
+        this.applicationDeadline = applicationDeadline;
+        this.activityStatus = activityStatus;
+    }
 }

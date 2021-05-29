@@ -31,4 +31,8 @@ public class Employer extends User{
 
     @OneToMany(mappedBy = "employer")
     private List<JobAdvertisement> jobAdvertisements;
+
+    public Employer(int id){
+        this.setId(id);
+    }
 }

@@ -1,6 +1,5 @@
 package kodlamaio.hrms.entities.concretes;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

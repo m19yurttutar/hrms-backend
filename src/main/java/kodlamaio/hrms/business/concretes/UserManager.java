@@ -34,11 +34,14 @@ public class UserManager implements UserService {
     public Result add(User user) {
 
         Result validationResult = ValidationRules.run(Validator.AreFieldsFull(user.getEmail(),user.getPassword()));
-        Result businessResult = BusinessRules.run(CheckIfEmailExists(user.getEmail()));
 
         if(validationResult != null){
             return validationResult;
-        }else if (businessResult != null){
+        }
+
+        Result businessResult = BusinessRules.run(CheckIfEmailExists(user.getEmail()));
+
+        if (businessResult != null){
             return businessResult;
         }
 

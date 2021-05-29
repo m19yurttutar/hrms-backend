@@ -1,10 +1,7 @@
 package kodlamaio.hrms.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import kodlamaio.hrms.business.abstracts.AuthService;
 import kodlamaio.hrms.core.utilities.results.Result;
@@ -25,12 +22,12 @@ public class AuthController {
     }
 
     @PostMapping("/jobseekerregister")
-    public Result JobSeekerRegister(@RequestBody JobSeeker jobSeeker, String confirmPassword){
+    public Result JobSeekerRegister(@RequestBody JobSeeker jobSeeker,@RequestParam String confirmPassword){
         return jobSeekerAuthService.register(jobSeeker, confirmPassword);
     }
 
     @PostMapping("/employerregister")
-    public Result EmployerRegister(@RequestBody Employer employer, String confirmPassword){
+    public Result EmployerRegister(@RequestBody Employer employer,@RequestParam String confirmPassword){
         return employerAuthService.register(employer, confirmPassword);
     }
 }
