@@ -2,14 +2,8 @@ package kodlamaio.hrms.entities.concretes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.type.IntegerType;
-import org.hibernate.type.StringType;
 
-import javax.lang.model.type.ArrayType;
 import javax.persistence.*;
 import java.time.LocalDate;
 
