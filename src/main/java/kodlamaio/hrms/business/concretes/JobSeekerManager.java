@@ -1,6 +1,5 @@
 package kodlamaio.hrms.business.concretes;
 
-import kodlamaio.hrms.core.utilities.adapters.VerificationAdapter;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
 import org.springframework.beans.factory.annotation.Autowired;

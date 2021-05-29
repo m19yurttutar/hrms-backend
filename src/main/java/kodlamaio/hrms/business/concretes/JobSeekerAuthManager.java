@@ -27,6 +27,7 @@ public class JobSeekerAuthManager implements AuthService<JobSeeker> {
         Result validationResult = ValidationRules.run(
                 Validator.AreFieldsFull(jobSeeker.getFirstName(), jobSeeker.getLastName(), jobSeeker.getNationalIdentityNumber(), jobSeeker.getBirthDate(), jobSeeker.getEmail(), jobSeeker.getPassword(), confirmPassword),
                 Validator.IsEmailInEmailFormat(jobSeeker.getEmail()),
+                Validator.IsBirthDateInBirthDateFormat(jobSeeker.getBirthDate().toString()),
                 Validator.IsPasswordSameAsConfirmPassword(jobSeeker.getPassword(),confirmPassword));
 
         if (validationResult != null){

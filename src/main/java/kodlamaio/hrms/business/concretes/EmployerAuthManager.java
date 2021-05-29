@@ -27,6 +27,7 @@ public class EmployerAuthManager implements AuthService<Employer> {
         Result validationResult = ValidationRules.run(
                 Validator.AreFieldsFull(employer.getCompanyName(), employer.getWebsite(), employer.getPhoneNumber(), employer.getEmail(), employer.getPassword(), confirmPassword),
                 Validator.IsEmailInEmailFormat(employer.getEmail()),
+                Validator.IsPhoneNumberInPhoneNumberFormat(employer.getPhoneNumber()),
                 Validator.DoesEmailHaveSameDomainAsWebsite(employer.getEmail(), employer.getWebsite()),
                 Validator.IsPasswordSameAsConfirmPassword(employer.getPassword(), confirmPassword)
         );

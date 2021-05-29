@@ -2,7 +2,6 @@ package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.constants.Messages;
-import kodlamaio.hrms.core.utilities.adapters.VerificationAdapter;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
@@ -25,6 +24,11 @@ public class EmployerManager implements EmployerService {
     @Override
     public DataResult<List<Employer>> getAll() {
         return new SuccessDataResult(employerDao.findAll(), Messages.employersListed);
+    }
+
+    @Override
+    public DataResult<Employer> getById(Integer id) {
+        return new SuccessDataResult<>(employerDao.getById(id),Messages.employerListed);
     }
 
     @Override
