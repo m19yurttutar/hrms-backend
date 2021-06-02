@@ -1,7 +1,9 @@
 package kodlamaio.hrms.business.concretes;
 
+import kodlamaio.hrms.core.utilities.adapters.VerificationAdapter;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
+import kodlamaio.hrms.core.utilities.verification.VerificationRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @Service
 public class JobSeekerManager implements JobSeekerService {
 
-    private JobSeekerDao jobSeekerDao;
+    private final JobSeekerDao jobSeekerDao;
 
     @Autowired
     public JobSeekerManager(JobSeekerDao jobSeekerDao){
@@ -34,6 +36,12 @@ public class JobSeekerManager implements JobSeekerService {
 
         if (businessResult != null){
             return businessResult;
+        }
+
+        Result verificationResult = VerificationRules.run(VerificationAdapter.MernisVerification(jobSeeker.getNationalIdentityNumber()), VerificationAdapter.EmailVerification());
+
+        if (verificationResult != null){
+            return verificationResult;
         }
 
         jobSeekerDao.save(jobSeeker);

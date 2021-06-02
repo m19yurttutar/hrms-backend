@@ -4,6 +4,7 @@ import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,9 +58,9 @@ public class Validator {
         return new SuccessResult();
     }
 
-    public static Result IsBirthDateInBirthDateFormat(String birthDate){
+    public static Result IsBirthDateInBirthDateFormat(LocalDate birthDate){
         Pattern pattern = Pattern.compile("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$");
-        Matcher matcher = pattern.matcher(birthDate);
+        Matcher matcher = pattern.matcher(String.valueOf(birthDate));
 
         if (!matcher.find()){
             return new ErrorResult("Girmiş olduğunuz doğum tarihi, doğum tarihi formatında değil.(Gerekli format: 'YYYY-AA-GG')");

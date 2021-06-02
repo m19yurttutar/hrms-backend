@@ -1,5 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
+import kodlamaio.hrms.core.entities.concretes.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,11 +12,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "job_seekers")
 @Data
-@EqualsAndHashCode(callSuper = false)
 @PrimaryKeyJoinColumn(name = "user_id")
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobSeeker extends User{
+public class JobSeeker extends User {
 
     @Column(name = "national_identity_number")
     private String nationalIdentityNumber;
@@ -28,4 +29,8 @@ public class JobSeeker extends User{
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
+    private CurriculumVitae curriculumVitae;
 }

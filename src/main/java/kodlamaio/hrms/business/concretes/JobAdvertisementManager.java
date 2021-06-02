@@ -8,21 +8,20 @@ import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
 import kodlamaio.hrms.core.utilities.validation.ValidationRules;
 import kodlamaio.hrms.dataAccess.abstracts.JobAdvertisementDao;
-import kodlamaio.hrms.entities.DTOs.JobAdvertisementDto;
+import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
 import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class JobAdvertisementManager implements JobAdvertisementService {
 
-    private JobAdvertisementDao jobAdvertisementDao;
-    private EmployerService employerService;
+    private final JobAdvertisementDao jobAdvertisementDao;
+    private final EmployerService employerService;
 
     @Autowired
     public JobAdvertisementManager(JobAdvertisementDao jobAdvertisementDao, EmployerService employerService){
@@ -62,7 +61,7 @@ public class JobAdvertisementManager implements JobAdvertisementService {
             return validationResult;
         }
 
-        JobAdvertisement jobAdvertisement= JobAdvertisementDtoToJobAdvertisementConverter(jobAdvertisementDto);
+        JobAdvertisement jobAdvertisement= jobAdvertisementDtoToJobAdvertisementConverter(jobAdvertisementDto);
 
         Result businessResult = BusinessRules.run(IsUserRoleEmployer(jobAdvertisement.getEmployer().getId()));
 
@@ -87,27 +86,24 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     private Result IsUserRoleEmployer(Integer id){
+        System.out.println(id);
         var employer = employerService.getById(id).getData();
 
         if (employer == null){
-            return new  ErrorResult("Bu işlem için uygun role sahip değilsiniz");
+            return new  ErrorResult("Bu işlem için uygun role sahip değilsiniz.");
         }
         return new SuccessResult();
     }
 
-    //Bu method JobAdvertisementDto objesini database'in tanıyacağı şekle çevirir.
-    private JobAdvertisement JobAdvertisementDtoToJobAdvertisementConverter(JobAdvertisementDto jobAdvertisementDto){
-        //Bu değer JSON Web Token yazıldığında giriş yapmış olan kullanıcının id'sini tutacak.
-        int currentUserId = 1;
+    //This method converts the JobAdvertisementDtoDto object into a form that the database will recognize.
+    private JobAdvertisement jobAdvertisementDtoToJobAdvertisementConverter(JobAdvertisementDto jobAdvertisementDto){
+        //This value will hold the userId of the logged-in user when the JSON Web Token was written.
+        int currentUserId = 2;
 
-        LocalDate currentDate = LocalDate.now();
         Employer employer = new Employer(currentUserId);
 
-        JobAdvertisement jobAdvertisement = new JobAdvertisement(
+        return new JobAdvertisement(
                 employer, jobAdvertisementDto.getJobPosition(), jobAdvertisementDto.getJobDescription(), jobAdvertisementDto.getCity(),
-                jobAdvertisementDto.getMinSalary(), jobAdvertisementDto.getMaxSalary(), jobAdvertisementDto.getVacantPositionCount(),
-                currentDate, jobAdvertisementDto.getApplicationDeadline(), true);
-
-        return jobAdvertisement;
+                jobAdvertisementDto.getMinSalary(), jobAdvertisementDto.getMaxSalary(), jobAdvertisementDto.getVacantPositionCount(), jobAdvertisementDto.getApplicationDeadline(), true);
     }
 }

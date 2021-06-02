@@ -3,7 +3,7 @@ package kodlamaio.hrms.api.controllers;
 import kodlamaio.hrms.business.abstracts.JobAdvertisementService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.DTOs.JobAdvertisementDto;
+import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
 import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/jobadvertisement")
+@RequestMapping("/api/jobAdvertisements")
 public class JobAdvertisementsController {
-    private JobAdvertisementService jobAdvertisementService;
+
+    private final JobAdvertisementService jobAdvertisementService;
 
     @Autowired
     public JobAdvertisementsController(JobAdvertisementService jobAdvertisementService) { this.jobAdvertisementService = jobAdvertisementService; }
 
-    @GetMapping("/getall")
+    @GetMapping("/getAll")
     public DataResult<List<JobAdvertisement>> getAll(){
         return jobAdvertisementService.getAll();
     }

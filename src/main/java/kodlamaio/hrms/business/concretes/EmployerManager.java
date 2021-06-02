@@ -2,8 +2,10 @@ package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.constants.Messages;
+import kodlamaio.hrms.core.utilities.adapters.VerificationAdapter;
 import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
+import kodlamaio.hrms.core.utilities.verification.VerificationRules;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.List;
 @Service
 public class EmployerManager implements EmployerService {
 
-    private EmployerDao employerDao;
+    private final EmployerDao employerDao;
 
     @Autowired
     public EmployerManager(EmployerDao employerDao){
@@ -23,7 +25,7 @@ public class EmployerManager implements EmployerService {
 
     @Override
     public DataResult<List<Employer>> getAll() {
-        return new SuccessDataResult(employerDao.findAll(), Messages.employersListed);
+        return new SuccessDataResult<>(employerDao.findAll(), Messages.employersListed);
     }
 
     @Override
@@ -38,6 +40,12 @@ public class EmployerManager implements EmployerService {
 
         if(businessResult != null){
             return businessResult;
+        }
+
+        Result verificationResult = VerificationRules.run(VerificationAdapter.EmailVerification(), VerificationAdapter.SystemEmployeesVerification());
+
+        if (verificationResult != null) {
+            return verificationResult;
         }
 
         employerDao.save(employer);

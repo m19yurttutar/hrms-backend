@@ -1,10 +1,10 @@
 package kodlamaio.hrms.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import kodlamaio.hrms.business.abstracts.AuthService;
-import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Employer;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
 
@@ -12,8 +12,8 @@ import kodlamaio.hrms.entities.concretes.JobSeeker;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private AuthService<JobSeeker> jobSeekerAuthService;
-    private AuthService<Employer> employerAuthService;
+    private final AuthService<JobSeeker> jobSeekerAuthService;
+    private final AuthService<Employer> employerAuthService;
 
     @Autowired
     public AuthController(AuthService<JobSeeker> jobSeekerAuthService, AuthService<Employer> employerAuthService){
@@ -21,13 +21,25 @@ public class AuthController {
         this.employerAuthService = employerAuthService;
     }
 
-    @PostMapping("/jobseekerregister")
-    public Result JobSeekerRegister(@RequestBody JobSeeker jobSeeker,@RequestParam String confirmPassword){
-        return jobSeekerAuthService.register(jobSeeker, confirmPassword);
+    @PostMapping("/jobSeekerRegister")
+    public ResponseEntity<?> JobSeekerRegister(@RequestBody JobSeeker jobSeeker, @RequestParam String confirmPassword){
+
+        var result = jobSeekerAuthService.register(jobSeeker, confirmPassword);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/employerregister")
-    public Result EmployerRegister(@RequestBody Employer employer,@RequestParam String confirmPassword){
-        return employerAuthService.register(employer, confirmPassword);
+    @PostMapping("/employerRegister")
+    public ResponseEntity<?> EmployerRegister( @RequestBody Employer employer, @RequestParam String confirmPassword){
+
+        var result = employerAuthService.register(employer, confirmPassword);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }

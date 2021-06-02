@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.User;
+import kodlamaio.hrms.core.entities.concretes.User;
 
 import java.util.List;
 
@@ -14,14 +14,14 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UsersController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UsersController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/getall")
+    @GetMapping("/getAll")
     public DataResult<List<User>> getAll(){
         return userService.getAll();
     }

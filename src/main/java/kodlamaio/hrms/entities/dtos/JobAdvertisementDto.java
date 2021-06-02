@@ -1,6 +1,6 @@
-package kodlamaio.hrms.entities.DTOs;
+package kodlamaio.hrms.entities.dtos;
 
-import kodlamaio.hrms.entities.abstracts.Dto;
+import kodlamaio.hrms.core.entities.abstracts.Dto;
 import kodlamaio.hrms.entities.concretes.City;
 import kodlamaio.hrms.entities.concretes.JobPosition;
 import lombok.Data;
@@ -14,6 +14,6 @@ public class JobAdvertisementDto implements Dto {
     private City city;
     private int minSalary;
     private int maxSalary;
-    private Integer vacantPositionCount;
+    private int vacantPositionCount;
     private LocalDate applicationDeadline;
 }

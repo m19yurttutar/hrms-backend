@@ -11,15 +11,15 @@ import kodlamaio.hrms.entities.concretes.JobPosition;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/jobpositions")
+@RequestMapping("/api/jobPositions")
 public class JobPositionsController {
 
-    private JobPositionService jobPositionService;
+    private final JobPositionService jobPositionService;
 
     @Autowired
     public JobPositionsController(JobPositionService jobPositionService) { this.jobPositionService = jobPositionService; }
 
-    @GetMapping("/getall")
+    @GetMapping("/getAll")
     public DataResult<List<JobPosition>> getAll(){
         return jobPositionService.getAll();
     }
