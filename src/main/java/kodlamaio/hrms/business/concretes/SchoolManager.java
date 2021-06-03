@@ -10,6 +10,7 @@ import kodlamaio.hrms.entities.concretes.CurriculumVitae;
 import kodlamaio.hrms.entities.concretes.School;
 import kodlamaio.hrms.entities.dtos.SchoolDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,12 @@ public class SchoolManager implements SchoolService {
     @Override
     public DataResult<List<School>> getAll() {
         return new SuccessDataResult<>(schoolDao.findAll());
+    }
+
+    @Override
+    public DataResult<List<School>> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "graduationYear");
+        return new SuccessDataResult<>(schoolDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort));
     }
 
     @Override

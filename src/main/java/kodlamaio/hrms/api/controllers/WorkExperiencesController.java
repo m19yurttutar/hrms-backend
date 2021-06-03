@@ -22,6 +22,9 @@ public class WorkExperiencesController {
     @GetMapping("/getAll")
     public DataResult<List<WorkExperience>> getAll(){ return workExperienceService.getAll(); }
 
+    @GetMapping("/getByCurriculumVitaeJobSeekerIdSortedByQuitYear")
+    public DataResult<List<WorkExperience>> getByCurriculumVitaeJobSeekerIdSortedByQuitYear(@RequestParam Integer jobSeekerId){ return workExperienceService.getByCurriculumVitaeJobSeekerIdSortedByQuitYear(jobSeekerId); }
+
     @PostMapping("/add")
     public Result add(@RequestBody WorkExperienceDto workExperienceDto){
         return workExperienceService.add(workExperienceDto);

@@ -12,12 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/curriculumVitaes")
-public class CurriculumVitaeController {
+public class CurriculumVitaesController {
 
     private final CurriculumVitaeService curriculumVitaeService;
 
     @Autowired
-    public CurriculumVitaeController(CurriculumVitaeService curriculumVitaeService) { this.curriculumVitaeService = curriculumVitaeService; }
+    public CurriculumVitaesController(CurriculumVitaeService curriculumVitaeService) { this.curriculumVitaeService = curriculumVitaeService; }
 
     @GetMapping("/getAll")
     public DataResult<List<CurriculumVitae>> getAll(){ return curriculumVitaeService.getAll(); }

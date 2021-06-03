@@ -5,12 +5,14 @@ import kodlamaio.hrms.business.abstracts.JobSeekerService;
 import kodlamaio.hrms.business.validationRules.Validator;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.validation.ValidationRules;
+import kodlamaio.hrms.entities.concretes.CurriculumVitae;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.entities.dtos.JobSeekerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JobSeekerAuthManager implements AuthService<JobSeeker> {
+public class JobSeekerAuthManager implements AuthService<JobSeekerDto> {
 
     private final JobSeekerService jobSeekerService;
 
@@ -20,18 +22,27 @@ public class JobSeekerAuthManager implements AuthService<JobSeeker> {
     }
 
     @Override
-    public Result register(JobSeeker jobSeeker, String confirmPassword) {
+    public Result register(JobSeekerDto jobSeekerDto, String confirmPassword) {
 
         Result validationResult = ValidationRules.run(
-                Validator.AreFieldsFull(jobSeeker.getFirstName(), jobSeeker.getLastName(), jobSeeker.getNationalIdentityNumber(), jobSeeker.getBirthDate(), jobSeeker.getEmail(), jobSeeker.getPassword(), confirmPassword),
-                Validator.IsEmailInEmailFormat(jobSeeker.getEmail()),
-                Validator.IsBirthDateInBirthDateFormat(jobSeeker.getBirthDate()),
-                Validator.IsPasswordSameAsConfirmPassword(jobSeeker.getPassword(),confirmPassword));
+                Validator.AreFieldsFull(jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getBirthDate(), jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), confirmPassword),
+                Validator.IsEmailInEmailFormat(jobSeekerDto.getEmail()),
+                Validator.IsBirthDateInBirthDateFormat(jobSeekerDto.getBirthDate()),
+                Validator.IsPasswordSameAsConfirmPassword(jobSeekerDto.getPassword(),confirmPassword));
 
         if (validationResult != null){
             return validationResult;
         }
+        JobSeeker jobSeeker = jobSeekerDtoToProfilePhotoConverter(jobSeekerDto);
 
         return this.jobSeekerService.add(jobSeeker);
+    }
+
+    //This method converts the JobSeekerDto object into a form that the database will recognize.
+    private JobSeeker jobSeekerDtoToProfilePhotoConverter(JobSeekerDto jobSeekerDto){
+
+        CurriculumVitae curriculumVitae = new CurriculumVitae();
+
+        return new JobSeeker(jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getBirthDate(), curriculumVitae);
     }
 }

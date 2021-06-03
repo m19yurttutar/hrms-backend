@@ -22,6 +22,9 @@ public class SchoolsController {
     @GetMapping("/getAll")
     public DataResult<List<School>> getAll(){ return schoolService.getAll(); }
 
+    @GetMapping("/getByCurriculumVitaeJobSeekerIdSortedByGraduationYear")
+    public DataResult<List<School>> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId){ return schoolService.getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(jobSeekerId); }
+
     @PostMapping("/add")
     public Result add(@RequestBody SchoolDto schoolDto){
         return schoolService.add(schoolDto);

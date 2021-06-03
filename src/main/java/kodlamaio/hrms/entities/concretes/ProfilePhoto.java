@@ -8,31 +8,35 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "connections")
+@Table(name = "profile_photos")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Connection {
+public class ProfilePhoto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "github_account_link")
-    private String githubAccountLink;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "linkedin_account_link")
-    private String linkedinAccountLink;
+    @Column(name = "url")
+    private String url;
+
+    @Column(name = "public_id")
+    private String publicId;
 
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
     private CurriculumVitae curriculumVitae;
 
-    public Connection(CurriculumVitae curriculumVitae, String githubAccountLink, String linkedinAccountLink){
-        this.setCurriculumVitae(curriculumVitae);
-        this.setGithubAccountLink(githubAccountLink);
-        this.setLinkedinAccountLink(linkedinAccountLink);
+    public ProfilePhoto(CurriculumVitae curriculumVitae, String name, String url, String publicId) {
+        this.curriculumVitae = curriculumVitae;
+        this.name = name;
+        this.url = url;
+        this.publicId = publicId;
     }
 }

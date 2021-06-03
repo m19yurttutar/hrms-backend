@@ -33,4 +33,13 @@ public class JobSeeker extends User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
     private CurriculumVitae curriculumVitae;
+
+    public JobSeeker(String email, String password, String nationalIdentityNumber, String firstName, String lastName, LocalDate birthDate, CurriculumVitae curriculumVitae) {
+        super(email, password);
+        this.nationalIdentityNumber = nationalIdentityNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.curriculumVitae = curriculumVitae;
+    }
 }

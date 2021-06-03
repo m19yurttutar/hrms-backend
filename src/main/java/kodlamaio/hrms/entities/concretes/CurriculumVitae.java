@@ -28,6 +28,9 @@ public class CurriculumVitae {
     @OneToOne(mappedBy = "curriculumVitae")
     private JobSeeker jobSeeker;
 
+    @OneToOne(mappedBy = "curriculumVitae")
+    private ProfilePhoto profilePhoto;
+
     @OneToMany(mappedBy = "curriculumVitae")
     private List<School> schools;
 
@@ -40,8 +43,8 @@ public class CurriculumVitae {
     @OneToMany(mappedBy = "curriculumVitae")
     private List<Skill> skills;
 
-    @OneToMany(mappedBy = "curriculumVitae")
-    private List<Connection> connections;
+    @OneToOne(mappedBy = "curriculumVitae")
+    private Connection connection;
 
     public CurriculumVitae(int id){
         this.setId(id);

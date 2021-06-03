@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface WorkExperienceService {
     DataResult<List<WorkExperience>> getAll();
+    DataResult<List<WorkExperience>> getByCurriculumVitaeJobSeekerIdSortedByQuitYear(Integer jobSeekerId);
     Result add(WorkExperienceDto workExperienceDto);
     Result delete(WorkExperience workExperience);
     Result update(WorkExperience workExperience);

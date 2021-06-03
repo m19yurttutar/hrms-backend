@@ -9,6 +9,7 @@ import kodlamaio.hrms.dataAccess.abstracts.WorkExperienceDao;
 import kodlamaio.hrms.entities.concretes.CurriculumVitae;
 import kodlamaio.hrms.entities.concretes.WorkExperience;
 import kodlamaio.hrms.entities.dtos.WorkExperienceDto;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,12 @@ public class WorkExperienceManager implements WorkExperienceService {
     @Override
     public DataResult<List<WorkExperience>> getAll() {
         return new SuccessDataResult<>(workExperienceDao.findAll());
+    }
+
+    @Override
+    public DataResult<List<WorkExperience>> getByCurriculumVitaeJobSeekerIdSortedByQuitYear(Integer jobSeekerId) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "quitYear");
+        return new SuccessDataResult<>(workExperienceDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort));
     }
 
     @Override

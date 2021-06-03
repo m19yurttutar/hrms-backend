@@ -1,5 +1,6 @@
 package kodlamaio.hrms.api.controllers;
 
+import kodlamaio.hrms.entities.dtos.JobSeekerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,19 +13,19 @@ import kodlamaio.hrms.entities.concretes.JobSeeker;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthService<JobSeeker> jobSeekerAuthService;
+    private final AuthService<JobSeekerDto> jobSeekerDtoAuthService;
     private final AuthService<Employer> employerAuthService;
 
     @Autowired
-    public AuthController(AuthService<JobSeeker> jobSeekerAuthService, AuthService<Employer> employerAuthService){
-        this.jobSeekerAuthService = jobSeekerAuthService;
+    public AuthController(AuthService<JobSeekerDto> jobSeekerDtoAuthService, AuthService<Employer> employerAuthService){
+        this.jobSeekerDtoAuthService = jobSeekerDtoAuthService;
         this.employerAuthService = employerAuthService;
     }
 
     @PostMapping("/jobSeekerRegister")
-    public ResponseEntity<?> JobSeekerRegister(@RequestBody JobSeeker jobSeeker, @RequestParam String confirmPassword){
+    public ResponseEntity<?> JobSeekerRegister(@RequestBody JobSeekerDto jobSeekerDto, @RequestParam String confirmPassword){
 
-        var result = jobSeekerAuthService.register(jobSeeker, confirmPassword);
+        var result = jobSeekerDtoAuthService.register(jobSeekerDto, confirmPassword);
 
         if (result.isSuccess()){
             return ResponseEntity.ok(result);
