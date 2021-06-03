@@ -23,12 +23,17 @@ public class ConnectionsController {
     public DataResult<List<Connection>> getAll(){ return connectionService.getAll(); }
 
     @PostMapping("/add")
-    public Result add(@RequestBody ConnectionDto connectionDto){
-        return connectionService.add(connectionDto);
+    public Result add(@RequestBody Connection connection){
+        return connectionService.add(connection);
     }
 
     @DeleteMapping("/delete")
     public Result delete(@RequestBody Connection connection){
         return connectionService.delete(connection);
+    }
+
+    @PutMapping("/update")
+    public Result update(@RequestBody ConnectionDto connectionDto){
+        return connectionService.update(connectionDto);
     }
 }

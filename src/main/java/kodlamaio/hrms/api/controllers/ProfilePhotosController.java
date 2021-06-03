@@ -29,7 +29,7 @@ public class ProfilePhotosController {
     @PostMapping("/upload")
     public DataResult<Map> upload(@RequestParam MultipartFile multipartFile) throws IOException {
         DataResult<Map> result = cloudinaryService.upload(multipartFile);
-        profilePhotoService.add(new ProfilePhotoDto((String) result.getData().get("original_filename"), (String) result.getData().get("url"), (String) result.getData().get("public_id")));
+        profilePhotoService.update(new ProfilePhotoDto((String) result.getData().get("original_filename"), (String) result.getData().get("url"), (String) result.getData().get("public_id")));
         return result;
     }
 

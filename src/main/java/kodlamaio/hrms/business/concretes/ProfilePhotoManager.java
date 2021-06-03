@@ -3,7 +3,6 @@ package kodlamaio.hrms.business.concretes;
 import kodlamaio.hrms.business.abstracts.ProfilePhotoService;
 import kodlamaio.hrms.core.utilities.results.*;
 import kodlamaio.hrms.dataAccess.abstracts.ProfilePhotoDao;
-import kodlamaio.hrms.entities.concretes.CurriculumVitae;
 import kodlamaio.hrms.entities.concretes.ProfilePhoto;
 import kodlamaio.hrms.entities.dtos.ProfilePhotoDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.List;
 @Service
 public class ProfilePhotoManager implements ProfilePhotoService {
 
-    private ProfilePhotoDao profilePhotoDao;
+    private final ProfilePhotoDao profilePhotoDao;
 
     @Autowired
     public ProfilePhotoManager(ProfilePhotoDao profilePhotoDao) {
@@ -32,8 +31,7 @@ public class ProfilePhotoManager implements ProfilePhotoService {
     }
 
     @Override
-    public Result add(ProfilePhotoDto profilePhotoDto) {
-        ProfilePhoto profilePhoto = profilePhotoDtoToProfilePhotoConverter(profilePhotoDto);
+    public Result add(ProfilePhoto profilePhoto) {
         profilePhotoDao.save(profilePhoto);
         return new SuccessResult();
     }
@@ -45,7 +43,8 @@ public class ProfilePhotoManager implements ProfilePhotoService {
     }
 
     @Override
-    public Result update(ProfilePhoto profilePhoto) {
+    public Result update(ProfilePhotoDto profilePhotoDto) {
+        ProfilePhoto profilePhoto = profilePhotoDtoToProfilePhotoConverter(profilePhotoDto);
         profilePhotoDao.save(profilePhoto);
         return new SuccessResult();
     }
@@ -61,11 +60,9 @@ public class ProfilePhotoManager implements ProfilePhotoService {
 
     //This method converts the ProfilePhotoDto object into a form that the database will recognize.
     private ProfilePhoto profilePhotoDtoToProfilePhotoConverter(ProfilePhotoDto profilePhotoDto){
-        //This value will hold the curriculumVitaeId of the logged-in user when the JSON Web Token was written.
-        int currentCurriculumVitaeId = 1;
+        //This value will hold the profilePhotoId of the logged-in user when the JSON Web Token was written.
+        int profilePhotoId = 1;
 
-        CurriculumVitae curriculumVitae = new CurriculumVitae(currentCurriculumVitaeId);
-
-        return new ProfilePhoto(curriculumVitae, profilePhotoDto.getName(), profilePhotoDto.getUrl(), profilePhotoDto.getPublicId());
+        return new ProfilePhoto(profilePhotoId, profilePhotoDto.getName(), profilePhotoDto.getUrl(), profilePhotoDto.getPublicId());
     }
 }

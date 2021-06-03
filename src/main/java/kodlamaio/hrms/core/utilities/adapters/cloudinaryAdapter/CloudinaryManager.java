@@ -23,6 +23,7 @@ public class CloudinaryManager implements CloudinaryService{
     private Map<String, String> valuesMap = new HashMap<>();
 
     public CloudinaryManager(){
+        //You have to write your cloudinary account information
         valuesMap.put("cloud_name", "dxahez1o6");
         valuesMap.put("api_key", "858295849616785");
         valuesMap.put("api_secret", "J4v6XFWaJreM3DM6zQ_GGXxK6Mg");

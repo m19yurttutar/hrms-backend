@@ -26,13 +26,12 @@ public class Connection {
     private String linkedinAccountLink;
 
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "connection")
     private CurriculumVitae curriculumVitae;
 
-    public Connection(CurriculumVitae curriculumVitae, String githubAccountLink, String linkedinAccountLink){
-        this.setCurriculumVitae(curriculumVitae);
-        this.setGithubAccountLink(githubAccountLink);
-        this.setLinkedinAccountLink(linkedinAccountLink);
+    public Connection(int id, String githubAccountLink, String linkedinAccountLink){
+        this.id = id;
+        this.githubAccountLink = githubAccountLink;
+        this.linkedinAccountLink = linkedinAccountLink;
     }
 }

@@ -10,8 +10,8 @@ import java.util.List;
 public interface ProfilePhotoService {
     DataResult<List<ProfilePhoto>> getAll();
     DataResult<ProfilePhoto> getById(Integer id);
-    Result add(ProfilePhotoDto profilePhotoDto);
+    Result add(ProfilePhoto profilePhoto);
     Result delete(ProfilePhoto profilePhoto);
-    Result update(ProfilePhoto profilePhoto);
+    Result update(ProfilePhotoDto profilePhotoDto);
     Result exist(Integer id);
 }

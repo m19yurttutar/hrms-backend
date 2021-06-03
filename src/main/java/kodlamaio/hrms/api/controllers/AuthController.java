@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import kodlamaio.hrms.business.abstracts.AuthService;
 import kodlamaio.hrms.entities.concretes.Employer;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
 
 @RestController
 @RequestMapping("/api/auth")

@@ -5,8 +5,10 @@ import kodlamaio.hrms.business.abstracts.JobSeekerService;
 import kodlamaio.hrms.business.validationRules.Validator;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.validation.ValidationRules;
+import kodlamaio.hrms.entities.concretes.Connection;
 import kodlamaio.hrms.entities.concretes.CurriculumVitae;
 import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.entities.concretes.ProfilePhoto;
 import kodlamaio.hrms.entities.dtos.JobSeekerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,7 @@ public class JobSeekerAuthManager implements AuthService<JobSeekerDto> {
     //This method converts the JobSeekerDto object into a form that the database will recognize.
     private JobSeeker jobSeekerDtoToProfilePhotoConverter(JobSeekerDto jobSeekerDto){
 
-        CurriculumVitae curriculumVitae = new CurriculumVitae();
+        CurriculumVitae curriculumVitae = new CurriculumVitae(new ProfilePhoto(), new Connection());
 
         return new JobSeeker(jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getBirthDate(), curriculumVitae);
     }

@@ -20,21 +20,20 @@ public class ProfilePhoto {
     private int id;
 
     @Column(name = "name")
-    private String name;
+    private String name = "default_profile_photo";
 
     @Column(name = "url")
-    private String url;
+    private String url = "https://res.cloudinary.com/dxahez1o6/image/upload/v1622738472/sbcfwui0lb3cbjamww9p.jpg";
 
     @Column(name = "public_id")
-    private String publicId;
+    private String publicId = "sbcfwui0lb3cbjamww9p";
 
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "profilePhoto")
     private CurriculumVitae curriculumVitae;
 
-    public ProfilePhoto(CurriculumVitae curriculumVitae, String name, String url, String publicId) {
-        this.curriculumVitae = curriculumVitae;
+    public ProfilePhoto(int id, String name, String url, String publicId) {
+        this.id = id;
         this.name = name;
         this.url = url;
         this.publicId = publicId;

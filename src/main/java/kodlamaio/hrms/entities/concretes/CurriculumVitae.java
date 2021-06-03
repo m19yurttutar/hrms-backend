@@ -21,15 +21,16 @@ public class CurriculumVitae {
     @Column(name = "id")
     private int id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
+    private ProfilePhoto profilePhoto;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "connection_id", referencedColumnName = "id")
+    private Connection connection;
+
     @Column(name = "cover_letter")
     private String coverLetter;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "curriculumVitae")
-    private JobSeeker jobSeeker;
-
-    @OneToOne(mappedBy = "curriculumVitae")
-    private ProfilePhoto profilePhoto;
 
     @OneToMany(mappedBy = "curriculumVitae")
     private List<School> schools;
@@ -43,14 +44,16 @@ public class CurriculumVitae {
     @OneToMany(mappedBy = "curriculumVitae")
     private List<Skill> skills;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "curriculumVitae")
-    private Connection connection;
+    private JobSeeker jobSeeker;
 
     public CurriculumVitae(int id){
-        this.setId(id);
+        this.id = id;
     }
 
-    public CurriculumVitae(JobSeeker jobSeeker){
-        this.setJobSeeker(jobSeeker);
+    public CurriculumVitae(ProfilePhoto profilePhoto, Connection connection){
+        this.profilePhoto = profilePhoto;
+        this.connection = connection;
     }
 }

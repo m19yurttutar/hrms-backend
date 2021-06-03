@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ConnectionService {
     DataResult<List<Connection>> getAll();
-    Result add(ConnectionDto connectionDto);
+    Result add(Connection connection);
     Result delete(Connection connection);
-    Result update(Connection connection);
+    Result update(ConnectionDto connectionDto);
 }
