@@ -86,7 +86,6 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     private Result IsUserRoleEmployer(Integer id){
-        System.out.println(id);
         var employer = employerService.getById(id).getData();
 
         if (employer == null){
@@ -98,7 +97,7 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     //This method converts the JobAdvertisementDtoDto object into a form that the database will recognize.
     private JobAdvertisement jobAdvertisementDtoToJobAdvertisementConverter(JobAdvertisementDto jobAdvertisementDto){
         //This value will hold the userId of the logged-in user when the JSON Web Token was written.
-        int currentUserId = 2;
+        int currentUserId = 3;
 
         Employer employer = new Employer(currentUserId);
 

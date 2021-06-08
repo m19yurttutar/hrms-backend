@@ -1,17 +1,15 @@
 package kodlamaio.hrms.api.controllers;
 
-import kodlamaio.hrms.core.utilities.results.DataResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
-import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Employer;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/employers")
+@CrossOrigin
 public class EmployersController {
 
     private final EmployerService employerService;
@@ -20,20 +18,42 @@ public class EmployersController {
     public EmployersController(EmployerService employerService) { this.employerService = employerService; }
 
     @GetMapping("/getAll")
-    public DataResult<List<Employer>> getAll(){ return employerService.getAll(); }
+    public ResponseEntity<?> getAll(){
+        var result = employerService.getAll();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
 
     @PostMapping("/add")
-    public Result add(@RequestBody Employer employer){
-        return employerService.add(employer);
+    public ResponseEntity<?> add(@RequestBody Employer employer){
+        var result = employerService.add(employer);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody Employer employer){
-        return employerService.delete(employer);
+    public ResponseEntity<?> delete(@RequestBody Employer employer){
+        var result = employerService.delete(employer);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PutMapping("/update")
-    public Result update(@RequestBody Employer employer){
-        return employerService.update(employer);
+    public ResponseEntity<?> update(@RequestBody Employer employer){
+        var result = employerService.update(employer);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }

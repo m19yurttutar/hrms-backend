@@ -1,14 +1,12 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.SkillService;
-import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Skill;
 import kodlamaio.hrms.entities.dtos.SkillDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/skills")
@@ -20,15 +18,42 @@ public class SkillsController {
     public SkillsController(SkillService skillService) { this.skillService = skillService; }
 
     @GetMapping("/getAll")
-    public DataResult<List<Skill>> getAll(){ return skillService.getAll(); }
+    public ResponseEntity<?> getAll(){
+        var result = skillService.getAll();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
 
     @PostMapping("/add")
-    public Result add(@RequestBody SkillDto skillDto){
-        return skillService.add(skillDto);
+    public ResponseEntity<?> add(@RequestBody SkillDto skillDto){
+        var result = skillService.add(skillDto);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody Skill skill){
-        return skillService.delete(skill);
+    public ResponseEntity<?> delete(@RequestBody Skill skill){
+        var result = skillService.delete(skill);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody Skill skill){
+        var result = skillService.update(skill);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }

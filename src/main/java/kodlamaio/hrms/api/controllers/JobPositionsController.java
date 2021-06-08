@@ -1,17 +1,15 @@
 package kodlamaio.hrms.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.business.abstracts.JobPositionService;
-import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.JobPosition;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobPositions")
+@CrossOrigin
 public class JobPositionsController {
 
     private final JobPositionService jobPositionService;
@@ -20,23 +18,43 @@ public class JobPositionsController {
     public JobPositionsController(JobPositionService jobPositionService) { this.jobPositionService = jobPositionService; }
 
     @GetMapping("/getAll")
-    public DataResult<List<JobPosition>> getAll(){
-        return jobPositionService.getAll();
+    public ResponseEntity<?> getAll(){
+        var result = jobPositionService.getAll();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody JobPosition jobPosition){
-        return jobPositionService.add(jobPosition);
+    public ResponseEntity<?> add(@RequestBody JobPosition jobPosition){
+        var result = jobPositionService.add(jobPosition);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody JobPosition jobPosition){
-        return jobPositionService.delete(jobPosition);
+    public ResponseEntity<?> delete(@RequestBody JobPosition jobPosition){
+        var result = jobPositionService.delete(jobPosition);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PutMapping("/update")
-    public Result update(@RequestBody JobPosition jobPosition){
-        return jobPositionService.update(jobPosition);
+    public ResponseEntity<?> update(@RequestBody JobPosition jobPosition){
+        var result = jobPositionService.update(jobPosition);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
 

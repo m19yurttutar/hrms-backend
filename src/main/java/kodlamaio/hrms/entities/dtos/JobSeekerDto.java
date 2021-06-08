@@ -1,6 +1,7 @@
 package kodlamaio.hrms.entities.dtos;
 
 import kodlamaio.hrms.core.entities.abstracts.Dto;
+import kodlamaio.hrms.entities.concretes.Gender;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 public class JobSeekerDto implements Dto {
     private String firstName;
     private String lastName;
+    private Gender gender;
     private String nationalIdentityNumber;
     private LocalDate birthDate;
     private String email;

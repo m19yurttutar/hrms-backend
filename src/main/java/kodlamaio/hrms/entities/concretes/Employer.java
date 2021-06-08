@@ -21,6 +21,9 @@ import java.util.List;
 @NoArgsConstructor
 public class Employer extends User {
 
+    @Column(name = "profile_photo_id")
+    private int profilePhotoId;
+
     @Column(name = "company_name")
     private String companyName;
 
@@ -36,5 +39,12 @@ public class Employer extends User {
 
     public Employer(int id){
         this.setId(id);
+    }
+
+    public Employer(ProfilePhoto profilePhoto, String email, String password, String companyName, String website, String phoneNumber) {
+        super(profilePhoto, email, password);
+        this.companyName = companyName;
+        this.website = website;
+        this.phoneNumber = phoneNumber;
     }
 }

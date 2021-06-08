@@ -9,21 +9,21 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="job_positions")
+@Table(name = "genders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobPosition {
+public class Gender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "job_position_name")
-    private String jobPositionName;
+    @Column(name = "gender_name")
+    private String genderName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobPosition")
-    private List<JobAdvertisement> jobAdvertisements;
+    @OneToMany(mappedBy = "gender")
+    private List<JobSeeker> jobSeekers;
 }

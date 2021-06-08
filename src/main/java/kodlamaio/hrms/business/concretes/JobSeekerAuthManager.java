@@ -35,16 +35,17 @@ public class JobSeekerAuthManager implements AuthService<JobSeekerDto> {
         if (validationResult != null){
             return validationResult;
         }
-        JobSeeker jobSeeker = jobSeekerDtoToProfilePhotoConverter(jobSeekerDto);
+        JobSeeker jobSeeker = jobSeekerDtoToJobSeekerConverter(jobSeekerDto);
 
         return this.jobSeekerService.add(jobSeeker);
     }
 
     //This method converts the JobSeekerDto object into a form that the database will recognize.
-    private JobSeeker jobSeekerDtoToProfilePhotoConverter(JobSeekerDto jobSeekerDto){
+    private JobSeeker jobSeekerDtoToJobSeekerConverter(JobSeekerDto jobSeekerDto){
 
-        CurriculumVitae curriculumVitae = new CurriculumVitae(new ProfilePhoto(), new Connection());
+        ProfilePhoto profilePhoto = new ProfilePhoto();
+        CurriculumVitae curriculumVitae = new CurriculumVitae(new Connection());
 
-        return new JobSeeker(jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getBirthDate(), curriculumVitae);
+        return new JobSeeker(profilePhoto, jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), curriculumVitae, jobSeekerDto.getGender(), jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getBirthDate());
     }
 }

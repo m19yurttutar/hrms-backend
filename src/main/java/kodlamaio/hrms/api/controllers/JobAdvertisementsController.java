@@ -1,17 +1,17 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.JobAdvertisementService;
-import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
 import kodlamaio.hrms.entities.concretes.JobAdvertisement;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobAdvertisements")
+@CrossOrigin
 public class JobAdvertisementsController {
 
     private final JobAdvertisementService jobAdvertisementService;
@@ -20,37 +20,72 @@ public class JobAdvertisementsController {
     public JobAdvertisementsController(JobAdvertisementService jobAdvertisementService) { this.jobAdvertisementService = jobAdvertisementService; }
 
     @GetMapping("/getAll")
-    public DataResult<List<JobAdvertisement>> getAll(){
-        return jobAdvertisementService.getAll();
+    public ResponseEntity<?> getAll(){
+        var result = jobAdvertisementService.getAll();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/getByActivityStatus")
-    public DataResult<List<JobAdvertisement>> getByActivityStatus(){
-        return jobAdvertisementService.getByActivityStatus();
+    public ResponseEntity<?> getByActivityStatus(){
+        var result = jobAdvertisementService.getByActivityStatus();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/getByActivityStatusSorted")
-    public DataResult<List<JobAdvertisement>> getByActivityStatusSorted(){
-        return jobAdvertisementService.getByActivityStatusSorted();
+    public ResponseEntity<?> getByActivityStatusSorted(){
+        var result = jobAdvertisementService.getByActivityStatusSorted();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/getByEmployerIdAndActivityStatus")
-    public DataResult<List<JobAdvertisement>> getByEmployer_IdAndActivityStatus(@RequestParam Integer employerId){
-        return jobAdvertisementService.getByEmployer_IdAndActivityStatus(employerId);
+    public ResponseEntity<?> getByEmployer_IdAndActivityStatus(@RequestParam Integer employerId){
+        var result = jobAdvertisementService.getByEmployer_IdAndActivityStatus(employerId);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody JobAdvertisementDto jobAdvertisementDto){
-        return jobAdvertisementService.add(jobAdvertisementDto);
+    public ResponseEntity<?> add(@RequestBody JobAdvertisementDto jobAdvertisementDto){
+        var result = jobAdvertisementService.add(jobAdvertisementDto);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody JobAdvertisement jobAdvertisement){
-        return jobAdvertisementService.delete(jobAdvertisement);
+    public ResponseEntity<?> delete(@RequestBody JobAdvertisement jobAdvertisement){
+        var result = jobAdvertisementService.delete(jobAdvertisement);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PutMapping("/update")
-    public Result update(@RequestBody JobAdvertisement jobAdvertisement){
-        return jobAdvertisementService.update(jobAdvertisement);
+    public ResponseEntity<?> update(@RequestBody JobAdvertisement jobAdvertisement){
+        var result = jobAdvertisementService.update(jobAdvertisement);
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }

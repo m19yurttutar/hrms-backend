@@ -18,8 +18,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class JobSeeker extends User {
 
-    @Column(name = "national_identity_number")
-    private String nationalIdentityNumber;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
+    private CurriculumVitae curriculumVitae;
+
+    @ManyToOne
+    @JoinColumn(name = "gender_id", referencedColumnName = "id")
+    private Gender gender;
 
     @Column(name = "first_name")
     private String firstName;
@@ -27,19 +32,19 @@ public class JobSeeker extends User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "national_identity_number")
+    private String nationalIdentityNumber;
+
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
-    private CurriculumVitae curriculumVitae;
-
-    public JobSeeker(String email, String password, String nationalIdentityNumber, String firstName, String lastName, LocalDate birthDate, CurriculumVitae curriculumVitae) {
-        super(email, password);
-        this.nationalIdentityNumber = nationalIdentityNumber;
+    public JobSeeker(ProfilePhoto profilePhoto, String email, String password, CurriculumVitae curriculumVitae, Gender gender, String firstName, String lastName, String nationalIdentityNumber, LocalDate birthDate) {
+        super(profilePhoto, email, password);
+        this.curriculumVitae = curriculumVitae;
+        this.gender = gender;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.nationalIdentityNumber = nationalIdentityNumber;
         this.birthDate = birthDate;
-        this.curriculumVitae = curriculumVitae;
     }
 }

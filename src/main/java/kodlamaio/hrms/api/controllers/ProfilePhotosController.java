@@ -2,19 +2,18 @@ package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.ProfilePhotoService;
 import kodlamaio.hrms.core.utilities.adapters.cloudinaryAdapter.CloudinaryService;
-import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.entities.concretes.ProfilePhoto;
 import kodlamaio.hrms.entities.dtos.ProfilePhotoDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/api/cloudinary")
+@RequestMapping("/api/profilePhotos")
 public class ProfilePhotosController {
 
     private final CloudinaryService cloudinaryService;
@@ -27,18 +26,26 @@ public class ProfilePhotosController {
     }
 
     @PostMapping("/upload")
-    public DataResult<Map> upload(@RequestParam MultipartFile multipartFile) throws IOException {
-        DataResult<Map> result = cloudinaryService.upload(multipartFile);
+    public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException {
+        var result = cloudinaryService.upload(multipartFile);
         profilePhotoService.update(new ProfilePhotoDto((String) result.getData().get("original_filename"), (String) result.getData().get("url"), (String) result.getData().get("public_id")));
-        return result;
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @DeleteMapping("/delete")
-    public DataResult<Map> delete(@RequestParam int id) throws IOException{
-        if(!profilePhotoService.exist(id).isSuccess()){
-            return new ErrorDataResult<>("Bu id numarasına sahip fotoğraf bulunamadı.");
-        }
+    public ResponseEntity<?> delete(@RequestParam int id) throws IOException{
         ProfilePhoto profilePhoto = profilePhotoService.getById(id).getData();
-        return cloudinaryService.delete(profilePhoto.getPublicId());
+        var result = cloudinaryService.delete(profilePhoto.getPublicId());
+
+        profilePhotoService.update(new ProfilePhotoDto("default_profile_photo", "https://res.cloudinary.com/dxahez1o6/image/upload/v1623099446/mqkyb7zxgnmnwwnlxhwf.jpg", "mqkyb7zxgnmnwwnlxhwf"));
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }

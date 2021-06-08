@@ -38,7 +38,7 @@ public class SchoolManager implements SchoolService {
 
     @Override
     public Result add(SchoolDto schoolDto) {
-        School school = schoolDtoToWorkSchoolConverter(schoolDto);
+        School school = schoolDtoToSchoolConverter(schoolDto);
         schoolDao.save(school);
         return new SuccessResult();
     }
@@ -56,7 +56,7 @@ public class SchoolManager implements SchoolService {
     }
 
     //This method converts the SchoolDto object into a form that the database will recognize.
-    private School schoolDtoToWorkSchoolConverter(SchoolDto schoolDto){
+    private School schoolDtoToSchoolConverter(SchoolDto schoolDto){
         //This value will hold the curriculumVitaeId of the logged-in user when the JSON Web Token was written.
         int currentCurriculumVitaeId = 1;
 

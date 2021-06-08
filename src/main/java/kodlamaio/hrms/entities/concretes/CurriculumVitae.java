@@ -22,10 +22,6 @@ public class CurriculumVitae {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_photo_id", referencedColumnName = "id")
-    private ProfilePhoto profilePhoto;
-
-    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "connection_id", referencedColumnName = "id")
     private Connection connection;
 
@@ -52,8 +48,7 @@ public class CurriculumVitae {
         this.id = id;
     }
 
-    public CurriculumVitae(ProfilePhoto profilePhoto, Connection connection){
-        this.profilePhoto = profilePhoto;
+    public CurriculumVitae(Connection connection){
         this.connection = connection;
     }
 }

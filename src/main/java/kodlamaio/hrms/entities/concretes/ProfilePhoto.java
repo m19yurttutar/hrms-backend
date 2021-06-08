@@ -1,6 +1,7 @@
 package kodlamaio.hrms.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kodlamaio.hrms.core.entities.concretes.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,14 +24,14 @@ public class ProfilePhoto {
     private String name = "default_profile_photo";
 
     @Column(name = "url")
-    private String url = "https://res.cloudinary.com/dxahez1o6/image/upload/v1622738472/sbcfwui0lb3cbjamww9p.jpg";
+    private String url = "https://res.cloudinary.com/dxahez1o6/image/upload/v1623099446/mqkyb7zxgnmnwwnlxhwf.jpg";
 
     @Column(name = "public_id")
-    private String publicId = "sbcfwui0lb3cbjamww9p";
+    private String publicId = "mqkyb7zxgnmnwwnlxhwf";
 
     @JsonIgnore
     @OneToOne(mappedBy = "profilePhoto")
-    private CurriculumVitae curriculumVitae;
+    private User user;
 
     public ProfilePhoto(int id, String name, String url, String publicId) {
         this.id = id;
