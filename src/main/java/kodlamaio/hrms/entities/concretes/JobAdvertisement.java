@@ -35,11 +35,19 @@ public class JobAdvertisement {
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
+    @ManyToOne
+    @JoinColumn(name = "working_type_id", referencedColumnName = "id")
+    private WorkingType workingType;
+
+    @ManyToOne
+    @JoinColumn(name = "working_time_id", referencedColumnName = "id")
+    private WorkingTime workingTime;
+
     @Column(name = "min_salary")
-    private int minSalary;
+    private float minSalary;
 
     @Column(name = "max_salary")
-    private int maxSalary;
+    private float maxSalary;
 
     @Column(name = "vacant_position_count")
     private int vacantPositionCount;
@@ -51,17 +59,21 @@ public class JobAdvertisement {
     private LocalDate applicationDeadline;
 
     @Column(name = "activity_status")
-    private boolean activityStatus;
+    private boolean activityStatus = true;
 
-    public JobAdvertisement(Employer employer, JobPosition jobPosition, String jobDescription, City city, int minSalary, int maxSalary, int vacantPositionCount, LocalDate applicationDeadline, boolean activityStatus) {
+    @Column(name = "confirmation_status")
+    private boolean confirmationStatus = false;
+
+    public JobAdvertisement(Employer employer, JobPosition jobPosition, City city, WorkingType workingType, WorkingTime workingTime, String jobDescription, Float minSalary, Float maxSalary, int vacantPositionCount, LocalDate applicationDeadline) {
         this.employer = employer;
         this.jobPosition = jobPosition;
-        this.jobDescription = jobDescription;
         this.city = city;
+        this.workingType = workingType;
+        this.workingTime = workingTime;
+        this.jobDescription = jobDescription;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
         this.vacantPositionCount = vacantPositionCount;
         this.applicationDeadline = applicationDeadline;
-        this.activityStatus = activityStatus;
     }
 }

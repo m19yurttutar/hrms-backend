@@ -21,9 +21,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Employer extends User {
 
-    @Column(name = "profile_photo_id")
-    private int profilePhotoId;
-
     @Column(name = "company_name")
     private String companyName;
 

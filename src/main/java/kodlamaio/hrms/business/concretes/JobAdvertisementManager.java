@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -51,11 +52,17 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     @Override
+    public DataResult<JobAdvertisement> getById(Integer id) {
+        return new SuccessDataResult<>(this.jobAdvertisementDao.getById(id), Messages.jobAdvertisementListed);
+    }
+
+    @Override
     public Result add(JobAdvertisementDto jobAdvertisementDto) {
 
         Result validationResult = ValidationRules.run(Validator.AreFieldsFull(
                 jobAdvertisementDto.getJobPosition(), jobAdvertisementDto.getJobDescription(), jobAdvertisementDto.getCity(),
-                jobAdvertisementDto.getVacantPositionCount(), jobAdvertisementDto.getApplicationDeadline()));
+                jobAdvertisementDto.getVacantPositionCount(), jobAdvertisementDto.getApplicationDeadline()),
+                Validator.IsApplicationDeadlineInApplicationDeadlineFormat(jobAdvertisementDto.getApplicationDeadline()));
 
         if (validationResult != null){
             return validationResult;
@@ -102,7 +109,7 @@ public class JobAdvertisementManager implements JobAdvertisementService {
         Employer employer = new Employer(currentUserId);
 
         return new JobAdvertisement(
-                employer, jobAdvertisementDto.getJobPosition(), jobAdvertisementDto.getJobDescription(), jobAdvertisementDto.getCity(),
-                jobAdvertisementDto.getMinSalary(), jobAdvertisementDto.getMaxSalary(), jobAdvertisementDto.getVacantPositionCount(), jobAdvertisementDto.getApplicationDeadline(), true);
+                employer, jobAdvertisementDto.getJobPosition(), jobAdvertisementDto.getCity(), jobAdvertisementDto.getWorkingType(), jobAdvertisementDto.getWorkingTime(), jobAdvertisementDto.getJobDescription(),
+                jobAdvertisementDto.getMinSalary(), jobAdvertisementDto.getMaxSalary(), jobAdvertisementDto.getVacantPositionCount(), LocalDate.parse(jobAdvertisementDto.getApplicationDeadline()));
     }
 }

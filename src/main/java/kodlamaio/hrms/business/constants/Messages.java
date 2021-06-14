@@ -23,6 +23,7 @@ public class Messages {
     public static String employerUpdated = "İş veren güncellendi";
 
     public static String jobAdvertisementsListed = "İş ilanları listelendi.";
+    public static String jobAdvertisementListed = "İş ilanı listelendi.";
     public static String jobAdvertisementAdded = "İş ilanı eklendi.";
     public static String jobAdvertisementDeleted = "İş ilanı silindi.";
     public static String jobAdvertisementUpdated = "İş ilanı güncellendi";
@@ -32,4 +33,8 @@ public class Messages {
     public static String curriculumVitaeAdded = "Özgeçmiş eklendi.";
     public static String curriculumVitaeDeleted = "Özgeçmiş silindi.";
     public static String curriculumVitaeUpdated = "Özgeçmiş güncellendi";
+
+    public static String workingTimesListed = "Çalışma zamanları listelendi.";
+
+    public static String workingTypesListed = "Çalışma türleri listelendi.";
 }

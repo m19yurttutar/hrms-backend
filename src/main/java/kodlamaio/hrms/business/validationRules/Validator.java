@@ -20,7 +20,7 @@ public class Validator {
 
     public static Result IsPasswordSameAsConfirmPassword(String password, String confirmPassword){
         if (!password.equals(confirmPassword)){
-            return new ErrorResult("Doğrulama parolası parola ile uyuşmuyor.");
+            return new ErrorResult("Şifre tekrarı, şifre ile uyuşmuyor.");
         }
         return new SuccessResult();
     }
@@ -43,7 +43,7 @@ public class Validator {
         Matcher matcher = pattern.matcher(email);
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz email adresi, email formatında değil.");
+            return new ErrorResult("Girmiş olduğunuz e-posta adresi, e-posta formatında değil.");
         }
         return new SuccessResult();
     }
@@ -53,17 +53,41 @@ public class Validator {
         Matcher matcher = pattern.matcher(phoneNumber);
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz telefon numarası, telefon numarası formatında değil.(Gerekli format: '000-000-0000')");
+            return new ErrorResult("Girmiş olduğunuz telefon numarası, telefon numarası formatında değil.(000-000-0000)");
         }
         return new SuccessResult();
     }
 
-    public static Result IsBirthDateInBirthDateFormat(LocalDate birthDate){
-        Pattern pattern = Pattern.compile("^(19|20)\\d\\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$");
+    public static Result IsBirthDateInBirthDateFormat(String birthDate){
+        Pattern pattern = Pattern.compile("^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$");
         Matcher matcher = pattern.matcher(String.valueOf(birthDate));
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz doğum tarihi, doğum tarihi formatında değil.(Gerekli format: 'YYYY-AA-GG')");
+            return new ErrorResult("Girmiş olduğunuz doğum tarihi, tarih formatında değildir.(YYYY-AA-GG)");
+        }else if(LocalDate.now().toEpochDay() - LocalDate.parse(birthDate).toEpochDay() < 6574){
+            return new ErrorResult("Bu sisteme kayıt olabilmek için 18 yaşından büyük olmanız gerekmektedir.");
+        }
+        return new SuccessResult();
+    }
+
+    public static Result IsApplicationDeadlineInApplicationDeadlineFormat(String applicationDeadline){
+        Pattern pattern = Pattern.compile("^(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$");
+        Matcher matcher = pattern.matcher(String.valueOf(applicationDeadline));
+
+        if (!matcher.find()){
+            return new ErrorResult("Girmiş olduğunuz son başvuru tarihi, tarih formatında değildir.(YYYY-AA-GG)");
+        }else if (LocalDate.now().toEpochDay() > LocalDate.parse(applicationDeadline).toEpochDay()){
+            return new ErrorResult("Girmiş olduğunuz son başvuru tarihine en az 1 gün süre olması gerekmektedir.");
+        }
+        return new SuccessResult();
+    }
+
+    public static Result IsWebsiteInWebsiteFormat(String website){
+        Pattern pattern = Pattern.compile("(http:\\/\\/)(www.)([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.([a-z]+)");
+        Matcher matcher = pattern.matcher(String.valueOf(website));
+
+        if (!matcher.find()){
+            return new ErrorResult("Girmiş olduğunuz website, website formatında değildir.");
         }
         return new SuccessResult();
     }

@@ -13,6 +13,8 @@ import kodlamaio.hrms.entities.dtos.JobSeekerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class JobSeekerAuthManager implements AuthService<JobSeekerDto> {
 
@@ -24,13 +26,13 @@ public class JobSeekerAuthManager implements AuthService<JobSeekerDto> {
     }
 
     @Override
-    public Result register(JobSeekerDto jobSeekerDto, String confirmPassword) {
+    public Result register(JobSeekerDto jobSeekerDto) {
 
         Result validationResult = ValidationRules.run(
-                Validator.AreFieldsFull(jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getBirthDate(), jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), confirmPassword),
+                Validator.AreFieldsFull(jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getBirthDate(), jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), jobSeekerDto.getConfirmPassword()),
                 Validator.IsEmailInEmailFormat(jobSeekerDto.getEmail()),
                 Validator.IsBirthDateInBirthDateFormat(jobSeekerDto.getBirthDate()),
-                Validator.IsPasswordSameAsConfirmPassword(jobSeekerDto.getPassword(),confirmPassword));
+                Validator.IsPasswordSameAsConfirmPassword(jobSeekerDto.getPassword(), jobSeekerDto.getConfirmPassword()));
 
         if (validationResult != null){
             return validationResult;
@@ -46,6 +48,6 @@ public class JobSeekerAuthManager implements AuthService<JobSeekerDto> {
         ProfilePhoto profilePhoto = new ProfilePhoto();
         CurriculumVitae curriculumVitae = new CurriculumVitae(new Connection());
 
-        return new JobSeeker(profilePhoto, jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), curriculumVitae, jobSeekerDto.getGender(), jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getBirthDate());
+        return new JobSeeker(profilePhoto, jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), curriculumVitae, jobSeekerDto.getGender(), jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getNationalIdentityNumber(), LocalDate.parse(jobSeekerDto.getBirthDate()));
     }
 }

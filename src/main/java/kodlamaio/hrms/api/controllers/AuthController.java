@@ -1,5 +1,7 @@
 package kodlamaio.hrms.api.controllers;
 
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.EmployerDto;
 import kodlamaio.hrms.entities.dtos.JobSeekerDto;
 import kodlamaio.hrms.business.abstracts.AuthService;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin
 public class AuthController{
 
     private final AuthService<JobSeekerDto> jobSeekerAuthService;
@@ -25,24 +28,12 @@ public class AuthController{
     }
 
     @PostMapping("/jobSeekerRegister")
-    public ResponseEntity<?> JobSeekerRegister(@Valid @RequestBody JobSeekerDto jobSeekerDto, @RequestParam String confirmPassword){
-
-        var result = jobSeekerAuthService.register(jobSeekerDto, confirmPassword);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result JobSeekerRegister(@RequestBody JobSeekerDto jobSeekerDto){
+        return jobSeekerAuthService.register(jobSeekerDto);
     }
 
     @PostMapping("/employerRegister")
-    public ResponseEntity<?> EmployerRegister(@RequestBody EmployerDto employerDto, @RequestParam String confirmPassword){
-
-        var result = employerAuthService.register(employerDto, confirmPassword);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result EmployerRegister(@RequestBody EmployerDto employerDto){
+        return employerAuthService.register(employerDto);
     }
 }

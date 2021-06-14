@@ -12,6 +12,7 @@ public interface JobAdvertisementService {
     DataResult<List<JobAdvertisement>> getByActivityStatus();
     DataResult<List<JobAdvertisement>> getByActivityStatusSorted();
     DataResult<List<JobAdvertisement>> getByEmployer_IdAndActivityStatus(Integer employerId);
+    DataResult<JobAdvertisement> getById(Integer id);
     Result add(JobAdvertisementDto jobAdvertisementDto);
     Result delete(JobAdvertisement jobAdvertisement);
     Result update(JobAdvertisement jobAdvertisement);

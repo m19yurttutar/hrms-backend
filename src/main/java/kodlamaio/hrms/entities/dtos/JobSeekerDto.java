@@ -12,7 +12,8 @@ public class JobSeekerDto implements Dto {
     private String lastName;
     private Gender gender;
     private String nationalIdentityNumber;
-    private LocalDate birthDate;
+    private String birthDate;
     private String email;
     private String password;
+    private String confirmPassword;
 }

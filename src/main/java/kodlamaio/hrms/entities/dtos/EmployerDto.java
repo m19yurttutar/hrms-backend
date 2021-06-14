@@ -10,4 +10,5 @@ public class EmployerDto implements Dto {
     private String phoneNumber;
     private String email;
     private String password;
+    private String confirmPassword;
 }

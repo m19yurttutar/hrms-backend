@@ -22,14 +22,15 @@ public class EmployerAuthManager implements AuthService<EmployerDto> {
     }
 
     @Override
-    public Result register(EmployerDto employerDto, String confirmPassword) {
+    public Result register(EmployerDto employerDto) {
 
         Result validationResult = ValidationRules.run(
-                Validator.AreFieldsFull(employerDto.getCompanyName(), employerDto.getWebsite(), employerDto.getPhoneNumber(), employerDto.getEmail(), employerDto.getPassword(), confirmPassword),
+                Validator.AreFieldsFull(employerDto.getCompanyName(), employerDto.getWebsite(), employerDto.getPhoneNumber(), employerDto.getEmail(), employerDto.getPassword(), employerDto.getConfirmPassword()),
                 Validator.IsEmailInEmailFormat(employerDto.getEmail()),
+                Validator.IsWebsiteInWebsiteFormat(employerDto.getWebsite()),
                 Validator.IsPhoneNumberInPhoneNumberFormat(employerDto.getPhoneNumber()),
                 Validator.DoesEmailHaveSameDomainAsWebsite(employerDto.getEmail(), employerDto.getWebsite()),
-                Validator.IsPasswordSameAsConfirmPassword(employerDto.getPassword(), confirmPassword)
+                Validator.IsPasswordSameAsConfirmPassword(employerDto.getPassword(), employerDto.getConfirmPassword())
         );
 
         if (validationResult != null) {

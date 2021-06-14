@@ -1,6 +1,8 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.JobAdvertisementService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
 import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 
@@ -22,6 +24,16 @@ public class JobAdvertisementsController {
     @GetMapping("/getAll")
     public ResponseEntity<?> getAll(){
         var result = jobAdvertisementService.getAll();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+
+    @GetMapping("/getById")
+    public ResponseEntity<?> getById(Integer id){
+        var result = jobAdvertisementService.getById(id);
 
         if (result.isSuccess()){
             return ResponseEntity.ok(result);
@@ -60,13 +72,8 @@ public class JobAdvertisementsController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody JobAdvertisementDto jobAdvertisementDto){
-        var result = jobAdvertisementService.add(jobAdvertisementDto);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result add(@RequestBody JobAdvertisementDto jobAdvertisementDto){
+        return jobAdvertisementService.add(jobAdvertisementDto);
     }
 
     @DeleteMapping("/delete")

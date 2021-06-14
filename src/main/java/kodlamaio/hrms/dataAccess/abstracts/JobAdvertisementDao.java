@@ -10,4 +10,5 @@ public interface JobAdvertisementDao extends JpaRepository<JobAdvertisement, Int
     List<JobAdvertisement> getByActivityStatusTrue();
     List<JobAdvertisement> getByActivityStatusTrue(Sort sort);
     List<JobAdvertisement> getByEmployer_IdAndActivityStatusTrue(Integer employerId);
+    JobAdvertisement getById(Integer id);
 }

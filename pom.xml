@@ -12,7 +12,7 @@
 	<artifactId>hrms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hrms</name>
-	<description>Kodlama.io Java Kampı Projesi</description>
+	<description>Human Resource Management System Backend Codes</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
