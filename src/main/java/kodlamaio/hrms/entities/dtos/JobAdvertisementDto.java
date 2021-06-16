@@ -11,13 +11,14 @@ import java.time.LocalDate;
 
 @Data
 public class JobAdvertisementDto implements Dto {
-    private JobPosition jobPosition;
-    private City city;
-    private WorkingType workingType;
-    private WorkingTime workingTime;
+    private Integer jobPositionId;
+    private Integer cityId;
+    private Integer workingTypeId;
+    private Integer workingTimeId;
+    private String jobSummary;
     private String jobDescription;
     private float minSalary;
     private float maxSalary;
-    private int vacantPositionCount;
+    private Integer vacantPositionCount;
     private String applicationDeadline;
 }

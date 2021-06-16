@@ -76,18 +76,28 @@ public class Validator {
 
         if (!matcher.find()){
             return new ErrorResult("Girmiş olduğunuz son başvuru tarihi, tarih formatında değildir.(YYYY-AA-GG)");
-        }else if (LocalDate.now().toEpochDay() > LocalDate.parse(applicationDeadline).toEpochDay()){
+        }else if (LocalDate.now().toEpochDay() >= LocalDate.parse(applicationDeadline).toEpochDay()){
             return new ErrorResult("Girmiş olduğunuz son başvuru tarihine en az 1 gün süre olması gerekmektedir.");
         }
         return new SuccessResult();
     }
 
     public static Result IsWebsiteInWebsiteFormat(String website){
-        Pattern pattern = Pattern.compile("(http:\\/\\/)(www.)([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.([a-z]+)");
+        Pattern pattern = Pattern.compile("^(http:\\/\\/)(www.)([a-zA-Z0-9]+).[a-zA-Z0-9]*.([a-z]+)$");
         Matcher matcher = pattern.matcher(String.valueOf(website));
 
         if (!matcher.find()){
             return new ErrorResult("Girmiş olduğunuz website, website formatında değildir.");
+        }
+        return new SuccessResult();
+    }
+
+    public static Result IsNationalIdentityNumberInNationalIdentityNumberFormat(String nationalIdentityNumber){
+        Pattern pattern = Pattern.compile("^[1-9]{1}[0-9]{9}[02468]{1}$");
+        Matcher matcher = pattern.matcher(String.valueOf(nationalIdentityNumber));
+
+        if (!matcher.find()){
+            return new ErrorResult("Girmiş olduğunuz T.C. Kimlik Numarası hatalı.");
         }
         return new SuccessResult();
     }

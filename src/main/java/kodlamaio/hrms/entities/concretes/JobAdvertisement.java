@@ -28,6 +28,9 @@ public class JobAdvertisement {
     @JoinColumn(name = "job_position_id")
     private JobPosition jobPosition;
 
+    @Column(name = "job_summary")
+    private String jobSummary;
+
     @Column(name = "job_description")
     private String jobDescription;
 
@@ -64,12 +67,13 @@ public class JobAdvertisement {
     @Column(name = "confirmation_status")
     private boolean confirmationStatus = false;
 
-    public JobAdvertisement(Employer employer, JobPosition jobPosition, City city, WorkingType workingType, WorkingTime workingTime, String jobDescription, Float minSalary, Float maxSalary, int vacantPositionCount, LocalDate applicationDeadline) {
+    public JobAdvertisement(Employer employer, JobPosition jobPosition, City city, WorkingType workingType, WorkingTime workingTime, String jobSummary, String jobDescription, Float minSalary, Float maxSalary, int vacantPositionCount, LocalDate applicationDeadline) {
         this.employer = employer;
         this.jobPosition = jobPosition;
         this.city = city;
         this.workingType = workingType;
         this.workingTime = workingTime;
+        this.jobSummary = jobSummary;
         this.jobDescription = jobDescription;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;

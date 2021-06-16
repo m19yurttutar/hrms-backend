@@ -8,9 +8,8 @@ import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.*;
 import kodlamaio.hrms.core.utilities.validation.ValidationRules;
 import kodlamaio.hrms.dataAccess.abstracts.JobAdvertisementDao;
+import kodlamaio.hrms.entities.concretes.*;
 import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
-import kodlamaio.hrms.entities.concretes.Employer;
-import kodlamaio.hrms.entities.concretes.JobAdvertisement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -59,10 +58,17 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     @Override
     public Result add(JobAdvertisementDto jobAdvertisementDto) {
 
-        Result validationResult = ValidationRules.run(Validator.AreFieldsFull(
-                jobAdvertisementDto.getJobPosition(), jobAdvertisementDto.getJobDescription(), jobAdvertisementDto.getCity(),
-                jobAdvertisementDto.getVacantPositionCount(), jobAdvertisementDto.getApplicationDeadline()),
-                Validator.IsApplicationDeadlineInApplicationDeadlineFormat(jobAdvertisementDto.getApplicationDeadline()));
+        Result areFieldsFullResult = ValidationRules.run(
+                Validator.AreFieldsFull(
+                        jobAdvertisementDto.getJobPositionId(), jobAdvertisementDto.getCityId(), jobAdvertisementDto.getWorkingTypeId(),
+                        jobAdvertisementDto.getWorkingTimeId(), jobAdvertisementDto.getJobSummary(), jobAdvertisementDto.getJobDescription(),
+                        jobAdvertisementDto.getVacantPositionCount(), jobAdvertisementDto.getApplicationDeadline()));
+
+        if (areFieldsFullResult != null){
+            return areFieldsFullResult;
+        }
+
+        Result validationResult = ValidationRules.run(Validator.IsApplicationDeadlineInApplicationDeadlineFormat(jobAdvertisementDto.getApplicationDeadline()));
 
         if (validationResult != null){
             return validationResult;
@@ -104,12 +110,12 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     //This method converts the JobAdvertisementDtoDto object into a form that the database will recognize.
     private JobAdvertisement jobAdvertisementDtoToJobAdvertisementConverter(JobAdvertisementDto jobAdvertisementDto){
         //This value will hold the userId of the logged-in user when the JSON Web Token was written.
-        int currentUserId = 3;
+        int currentUserId = 5;
 
         Employer employer = new Employer(currentUserId);
 
         return new JobAdvertisement(
-                employer, jobAdvertisementDto.getJobPosition(), jobAdvertisementDto.getCity(), jobAdvertisementDto.getWorkingType(), jobAdvertisementDto.getWorkingTime(), jobAdvertisementDto.getJobDescription(),
+                employer, new JobPosition(jobAdvertisementDto.getJobPositionId()), new City(jobAdvertisementDto.getCityId()), new WorkingType(jobAdvertisementDto.getWorkingTypeId()), new WorkingTime(jobAdvertisementDto.getWorkingTimeId()), jobAdvertisementDto.getJobSummary(), jobAdvertisementDto.getJobDescription(),
                 jobAdvertisementDto.getMinSalary(), jobAdvertisementDto.getMaxSalary(), jobAdvertisementDto.getVacantPositionCount(), LocalDate.parse(jobAdvertisementDto.getApplicationDeadline()));
     }
 }

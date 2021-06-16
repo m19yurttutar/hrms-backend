@@ -26,4 +26,8 @@ public class WorkingType {
     @JsonIgnore
     @OneToMany(mappedBy = "workingType")
     private List<JobAdvertisement> jobAdvertisements;
+
+    public WorkingType(int id) {
+        this.id = id;
+    }
 }

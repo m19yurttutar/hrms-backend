@@ -28,4 +28,8 @@ public class City {
     @JsonIgnore
     @OneToMany(mappedBy = "city")
     private List<JobAdvertisement> jobAdvertisements;
+
+    public City(int id) {
+        this.id = id;
+    }
 }

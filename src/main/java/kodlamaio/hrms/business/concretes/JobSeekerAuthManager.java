@@ -21,29 +21,36 @@ public class JobSeekerAuthManager implements AuthService<JobSeekerDto> {
     private final JobSeekerService jobSeekerService;
 
     @Autowired
-    public JobSeekerAuthManager(JobSeekerService jobSeekerService){
+    public JobSeekerAuthManager(JobSeekerService jobSeekerService) {
         this.jobSeekerService = jobSeekerService;
     }
 
     @Override
     public Result register(JobSeekerDto jobSeekerDto) {
 
+        Result areFieldsFullResult = ValidationRules.run(Validator.AreFieldsFull(jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getGender(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getBirthDate(), jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), jobSeekerDto.getConfirmPassword()));
+
+        if (areFieldsFullResult != null) {
+            return areFieldsFullResult;
+        }
+
         Result validationResult = ValidationRules.run(
-                Validator.AreFieldsFull(jobSeekerDto.getFirstName(), jobSeekerDto.getLastName(), jobSeekerDto.getNationalIdentityNumber(), jobSeekerDto.getBirthDate(), jobSeekerDto.getEmail(), jobSeekerDto.getPassword(), jobSeekerDto.getConfirmPassword()),
-                Validator.IsEmailInEmailFormat(jobSeekerDto.getEmail()),
                 Validator.IsBirthDateInBirthDateFormat(jobSeekerDto.getBirthDate()),
+                Validator.IsNationalIdentityNumberInNationalIdentityNumberFormat(jobSeekerDto.getNationalIdentityNumber()),
+                Validator.IsEmailInEmailFormat(jobSeekerDto.getEmail()),
                 Validator.IsPasswordSameAsConfirmPassword(jobSeekerDto.getPassword(), jobSeekerDto.getConfirmPassword()));
 
-        if (validationResult != null){
+        if (validationResult != null) {
             return validationResult;
         }
+
         JobSeeker jobSeeker = jobSeekerDtoToJobSeekerConverter(jobSeekerDto);
 
         return this.jobSeekerService.add(jobSeeker);
     }
 
     //This method converts the JobSeekerDto object into a form that the database will recognize.
-    private JobSeeker jobSeekerDtoToJobSeekerConverter(JobSeekerDto jobSeekerDto){
+    private JobSeeker jobSeekerDtoToJobSeekerConverter(JobSeekerDto jobSeekerDto) {
 
         ProfilePhoto profilePhoto = new ProfilePhoto();
         CurriculumVitae curriculumVitae = new CurriculumVitae(new Connection());

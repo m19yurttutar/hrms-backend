@@ -26,4 +26,8 @@ public class WorkingTime {
     @JsonIgnore
     @OneToMany(mappedBy = "workingTime")
     private List<JobAdvertisement> jobAdvertisements;
+
+    public WorkingTime(int id) {
+        this.id = id;
+    }
 }
