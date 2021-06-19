@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -46,6 +47,10 @@ public class JobAdvertisement {
     @JoinColumn(name = "working_time_id", referencedColumnName = "id")
     private WorkingTime workingTime;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "job_advertisement_confirmation_id")
+    private JobAdvertisementConfirmation jobAdvertisementConfirmation;
+
     @Column(name = "min_salary")
     private float minSalary;
 
@@ -64,20 +69,22 @@ public class JobAdvertisement {
     @Column(name = "activity_status")
     private boolean activityStatus = true;
 
-    @Column(name = "confirmation_status")
-    private boolean confirmationStatus = false;
-
-    public JobAdvertisement(Employer employer, JobPosition jobPosition, City city, WorkingType workingType, WorkingTime workingTime, String jobSummary, String jobDescription, Float minSalary, Float maxSalary, int vacantPositionCount, LocalDate applicationDeadline) {
+    public JobAdvertisement(Employer employer, JobPosition jobPosition, City city, WorkingType workingType, WorkingTime workingTime, JobAdvertisementConfirmation jobAdvertisementConfirmation, String jobSummary, String jobDescription, Float minSalary, Float maxSalary, int vacantPositionCount, LocalDate applicationDeadline) {
         this.employer = employer;
         this.jobPosition = jobPosition;
         this.city = city;
         this.workingType = workingType;
         this.workingTime = workingTime;
+        this.jobAdvertisementConfirmation = jobAdvertisementConfirmation;
         this.jobSummary = jobSummary;
         this.jobDescription = jobDescription;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
         this.vacantPositionCount = vacantPositionCount;
         this.applicationDeadline = applicationDeadline;
+    }
+
+    public JobAdvertisement(int id) {
+        this.id = id;
     }
 }

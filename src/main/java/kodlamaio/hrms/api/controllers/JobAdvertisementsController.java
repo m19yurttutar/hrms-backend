@@ -1,7 +1,6 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.JobAdvertisementService;
-import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
 import kodlamaio.hrms.entities.concretes.JobAdvertisement;
@@ -41,9 +40,19 @@ public class JobAdvertisementsController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @GetMapping("/getByActivityStatus")
-    public ResponseEntity<?> getByActivityStatus(){
-        var result = jobAdvertisementService.getByActivityStatus();
+    @GetMapping("/getUnconfirmedJobAdvertisement")
+    public ResponseEntity<?> getUnconfirmedJobAdvertisement(){
+        var result = jobAdvertisementService.getUnconfirmedJobAdvertisement();
+
+        if (result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+
+    @GetMapping("/getByActivityStatusAndConfirmationStatus")
+    public ResponseEntity<?> getByActivityStatusAndConfirmationStatus(){
+        var result = jobAdvertisementService.getByActivityStatusAndConfirmationStatus();
 
         if (result.isSuccess()){
             return ResponseEntity.ok(result);

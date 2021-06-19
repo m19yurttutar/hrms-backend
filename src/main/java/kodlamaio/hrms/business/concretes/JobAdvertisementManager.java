@@ -35,8 +35,13 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     @Override
-    public DataResult<List<JobAdvertisement>> getByActivityStatus() {
-        return new SuccessDataResult<>(this.jobAdvertisementDao.getByActivityStatusTrue());
+    public DataResult<List<JobAdvertisement>> getUnconfirmedJobAdvertisement() {
+        return new SuccessDataResult<>(this.jobAdvertisementDao.getByJobAdvertisementConfirmation_EditDateAndJobAdvertisementConfirmation_ConfirmationStatus(null,false),Messages.jobAdvertisementsListed);
+    }
+
+    @Override
+    public DataResult<List<JobAdvertisement>> getByActivityStatusAndConfirmationStatus() {
+        return new SuccessDataResult<>(this.jobAdvertisementDao.getByActivityStatusTrueAndJobAdvertisementConfirmation_ConfirmationStatus(true),Messages.jobAdvertisementsListed);
     }
 
     @Override
@@ -112,10 +117,8 @@ public class JobAdvertisementManager implements JobAdvertisementService {
         //This value will hold the userId of the logged-in user when the JSON Web Token was written.
         int currentUserId = 5;
 
-        Employer employer = new Employer(currentUserId);
-
         return new JobAdvertisement(
-                employer, new JobPosition(jobAdvertisementDto.getJobPositionId()), new City(jobAdvertisementDto.getCityId()), new WorkingType(jobAdvertisementDto.getWorkingTypeId()), new WorkingTime(jobAdvertisementDto.getWorkingTimeId()), jobAdvertisementDto.getJobSummary(), jobAdvertisementDto.getJobDescription(),
+                new Employer(currentUserId), new JobPosition(jobAdvertisementDto.getJobPositionId()), new City(jobAdvertisementDto.getCityId()), new WorkingType(jobAdvertisementDto.getWorkingTypeId()), new WorkingTime(jobAdvertisementDto.getWorkingTimeId()), new JobAdvertisementConfirmation(), jobAdvertisementDto.getJobSummary(), jobAdvertisementDto.getJobDescription(),
                 jobAdvertisementDto.getMinSalary(), jobAdvertisementDto.getMaxSalary(), jobAdvertisementDto.getVacantPositionCount(), LocalDate.parse(jobAdvertisementDto.getApplicationDeadline()));
     }
 }

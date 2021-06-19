@@ -22,6 +22,12 @@ public class Messages {
     public static String employerDeleted = "İş veren silindi.";
     public static String employerUpdated = "İş veren güncellendi";
 
+    public static String systemEmployeesListed = "Sistem çalışanları listelendi.";
+    public static String systemEmployeeListed = "Sistem çalışanı listelendi.";
+    public static String systemEmployeeAdded = "Sistem çalışanı eklendi.";
+    public static String systemEmployeeDeleted = "Sistem çalışanı silindi.";
+    public static String systemEmployeeUpdated = "Sistem çalışanı güncellendi.";
+
     public static String jobAdvertisementsListed = "İş ilanları listelendi.";
     public static String jobAdvertisementListed = "İş ilanı listelendi.";
     public static String jobAdvertisementAdded = "İş ilanı eklendi.";
@@ -37,4 +43,10 @@ public class Messages {
     public static String workingTimesListed = "Çalışma zamanları listelendi.";
 
     public static String workingTypesListed = "Çalışma türleri listelendi.";
+
+    public static String jobAdvertisementConfirmationsListed = "İş ilanı doğrulamaları listelendi.";
+    public static String jobAdvertisementConfirmationListed = "İş ilanı doğrulaması listelendi.";
+    public static String jobAdvertisementConfirmationAdded = "İş ilanı doğrulaması eklendi.";
+    public static String jobAdvertisementConfirmationDeleted = "İş ilanı doğrulaması silindi.";
+    public static String jobAdvertisementConfirmationUpdated = "İş ilanı doğrulaması güncellendi.";
 }

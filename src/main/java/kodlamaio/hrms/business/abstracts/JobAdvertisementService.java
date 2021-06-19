@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface JobAdvertisementService {
     DataResult<List<JobAdvertisement>> getAll();
-    DataResult<List<JobAdvertisement>> getByActivityStatus();
+    DataResult<List<JobAdvertisement>> getUnconfirmedJobAdvertisement();
+    DataResult<List<JobAdvertisement>> getByActivityStatusAndConfirmationStatus();
     DataResult<List<JobAdvertisement>> getByActivityStatusSorted();
     DataResult<List<JobAdvertisement>> getByEmployer_IdAndActivityStatus(Integer employerId);
     DataResult<JobAdvertisement> getById(Integer id);
