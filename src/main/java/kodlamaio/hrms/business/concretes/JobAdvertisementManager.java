@@ -47,12 +47,12 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     @Override
     public DataResult<List<JobAdvertisement>> getByActivityStatusSorted() {
         Sort sort = Sort.by(Sort.Direction.DESC, "releaseDate");
-        return new SuccessDataResult<>(this.jobAdvertisementDao.getByActivityStatusTrue(sort));
+        return new SuccessDataResult<>(this.jobAdvertisementDao.getByActivityStatusTrue(sort), Messages.jobAdvertisementsListed);
     }
 
     @Override
     public DataResult<List<JobAdvertisement>> getByEmployer_IdAndActivityStatus(Integer employerId) {
-        return new SuccessDataResult<>(this.jobAdvertisementDao.getByEmployer_IdAndActivityStatusTrue(employerId));
+        return new SuccessDataResult<>(this.jobAdvertisementDao.getByEmployer_IdAndActivityStatusTrue(employerId), Messages.jobAdvertisementsListed);
     }
 
     @Override

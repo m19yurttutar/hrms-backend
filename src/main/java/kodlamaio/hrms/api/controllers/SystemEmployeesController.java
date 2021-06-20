@@ -1,13 +1,15 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.SystemEmployeeService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.SystemEmployee;
 import kodlamaio.hrms.entities.dtos.SystemEmployeeDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/systemEmployees")
@@ -19,13 +21,8 @@ public class SystemEmployeesController {
     public SystemEmployeesController(SystemEmployeeService systemEmployeeService) { this.systemEmployeeService = systemEmployeeService; }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = systemEmployeeService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<SystemEmployee>> getAll(){
+        return systemEmployeeService.getAll();
     }
 
     @PostMapping("/add")

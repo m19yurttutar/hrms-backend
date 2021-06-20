@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.WorkExperienceService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -25,32 +26,32 @@ public class WorkExperienceManager implements WorkExperienceService {
 
     @Override
     public DataResult<List<WorkExperience>> getAll() {
-        return new SuccessDataResult<>(workExperienceDao.findAll());
+        return new SuccessDataResult<>(workExperienceDao.findAll(), Messages.workingExperiencesListed);
     }
 
     @Override
     public DataResult<List<WorkExperience>> getByCurriculumVitaeJobSeekerIdSortedByQuitYear(Integer jobSeekerId) {
         Sort sort = Sort.by(Sort.Direction.DESC, "quitYear");
-        return new SuccessDataResult<>(workExperienceDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort));
+        return new SuccessDataResult<>(workExperienceDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort), Messages.workingExperiencesListed);
     }
 
     @Override
     public Result add(WorkExperienceDto workExperienceDto) {
         WorkExperience workExperience = workExperienceDtoToWorkExperienceConverter(workExperienceDto);
         workExperienceDao.save(workExperience);
-        return new SuccessResult();
+        return new SuccessResult(Messages.workingExperienceAdded);
     }
 
     @Override
     public Result delete(WorkExperience workExperience) {
         workExperienceDao.delete(workExperience);
-        return new SuccessResult();
+        return new SuccessResult(Messages.workingExperienceDeleted);
     }
 
     @Override
     public Result update(WorkExperience workExperience) {
         workExperienceDao.save(workExperience);
-        return new SuccessResult();
+        return new SuccessResult(Messages.workingExperienceUpdated);
     }
 
     //This method converts the WorkExperienceDto object into a form that the database will recognize.

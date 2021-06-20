@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.SkillService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -26,26 +27,26 @@ public class SkillManager implements SkillService {
 
     @Override
     public DataResult<List<Skill>> getAll() {
-        return new SuccessDataResult<>(skillDao.findAll());
+        return new SuccessDataResult<>(skillDao.findAll(), Messages.skillsListed);
     }
 
     @Override
     public Result add(SkillDto skillDto) {
         Skill skill = skillDtoToSkillConverter(skillDto);
         skillDao.save(skill);
-        return new SuccessResult();
+        return new SuccessResult(Messages.skillAdded);
     }
 
     @Override
     public Result delete(Skill skill) {
         skillDao.delete(skill);
-        return new SuccessResult();
+        return new SuccessResult(Messages.skillDeleted);
     }
 
     @Override
     public Result update(Skill skill) {
         skillDao.save(skill);
-        return new SuccessResult();
+        return new SuccessResult(Messages.skillUpdated);
     }
 
     //This method converts the SkillDto object into a form that the database will recognize.

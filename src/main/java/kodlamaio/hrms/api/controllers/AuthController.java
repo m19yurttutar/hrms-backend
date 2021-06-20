@@ -1,17 +1,12 @@
 package kodlamaio.hrms.api.controllers;
 
-import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.EmployerDto;
 import kodlamaio.hrms.entities.dtos.JobSeekerDto;
 import kodlamaio.hrms.business.abstracts.AuthService;
-import kodlamaio.hrms.entities.concretes.Employer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")

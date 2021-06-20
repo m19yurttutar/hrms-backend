@@ -1,5 +1,6 @@
 package kodlamaio.hrms.business.validationRules;
 
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
@@ -12,7 +13,7 @@ public class Validator {
     public static Result AreFieldsFull(Object... fields){
         for (Object field : fields){
             if (field == null){
-                return new ErrorResult("İstenilen alanlar boş bırakılamaz.");
+                return new ErrorResult(Messages.fieldsCannotBeNull);
             }
         }
         return new SuccessResult();
@@ -20,7 +21,7 @@ public class Validator {
 
     public static Result IsPasswordSameAsConfirmPassword(String password, String confirmPassword){
         if (!password.equals(confirmPassword)){
-            return new ErrorResult("Şifre tekrarı, şifre ile uyuşmuyor.");
+            return new ErrorResult(Messages.passwordDoesntMatchPasswordConfirmation);
         }
         return new SuccessResult();
     }
@@ -31,7 +32,7 @@ public class Validator {
 
         if (splittedEmail.length >= 2 && splittedWebsite.length >= 2){
             if (!splittedEmail[1].equals(splittedWebsite[1])){
-                return new ErrorResult("Email adresi ile websitesi farklı domainlere sahip.");
+                return new ErrorResult(Messages.emailAndWebsiteCannotHaveDifferentDomain);
             }
             return new SuccessResult();
         }
@@ -43,7 +44,7 @@ public class Validator {
         Matcher matcher = pattern.matcher(email);
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz e-posta adresi, e-posta formatında değil.");
+            return new ErrorResult(Messages.emailIsNotInEmailFormat);
         }
         return new SuccessResult();
     }
@@ -53,7 +54,7 @@ public class Validator {
         Matcher matcher = pattern.matcher(phoneNumber);
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz telefon numarası, telefon numarası formatında değil.(000-000-0000)");
+            return new ErrorResult(Messages.phoneNumberIsNotInPhoneNumberFormat);
         }
         return new SuccessResult();
     }
@@ -63,9 +64,9 @@ public class Validator {
         Matcher matcher = pattern.matcher(String.valueOf(birthDate));
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz doğum tarihi, tarih formatında değildir.(YYYY-AA-GG)");
+            return new ErrorResult(Messages.birthDateIsNotInDateFormat);
         }else if(LocalDate.now().toEpochDay() - LocalDate.parse(birthDate).toEpochDay() < 6574){
-            return new ErrorResult("Bu sisteme kayıt olabilmek için 18 yaşından büyük olmanız gerekmektedir.");
+            return new ErrorResult(Messages.ageIsNotOldEnough);
         }
         return new SuccessResult();
     }
@@ -75,19 +76,19 @@ public class Validator {
         Matcher matcher = pattern.matcher(String.valueOf(applicationDeadline));
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz son başvuru tarihi, tarih formatında değildir.(YYYY-AA-GG)");
+            return new ErrorResult(Messages.applicationDeadlineIsNotInDateFormat);
         }else if (LocalDate.now().toEpochDay() >= LocalDate.parse(applicationDeadline).toEpochDay()){
-            return new ErrorResult("Girmiş olduğunuz son başvuru tarihine en az 1 gün süre olması gerekmektedir.");
+            return new ErrorResult(Messages.applicationDateIsNotFutureDate);
         }
         return new SuccessResult();
     }
 
     public static Result IsWebsiteInWebsiteFormat(String website){
-        Pattern pattern = Pattern.compile("^(http:\\/\\/)(www.)([a-zA-Z0-9]+).[a-zA-Z0-9]*.([a-z]+)$");
+        Pattern pattern = Pattern.compile("^(http://)(www.)([a-zA-Z0-9]+).[a-zA-Z0-9]*.([a-z]+)$");
         Matcher matcher = pattern.matcher(String.valueOf(website));
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz website, website formatında değildir.");
+            return new ErrorResult(Messages.websiteIsNotInWebsiteFormat);
         }
         return new SuccessResult();
     }
@@ -97,7 +98,7 @@ public class Validator {
         Matcher matcher = pattern.matcher(String.valueOf(nationalIdentityNumber));
 
         if (!matcher.find()){
-            return new ErrorResult("Girmiş olduğunuz T.C. Kimlik Numarası hatalı.");
+            return new ErrorResult(Messages.nationalIdentityNumberIsNotInNationalIdentityNumberFormat);
         }
         return new SuccessResult();
     }

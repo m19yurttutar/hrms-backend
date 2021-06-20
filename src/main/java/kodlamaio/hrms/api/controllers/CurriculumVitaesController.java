@@ -1,11 +1,14 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.CurriculumVitaeService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.CurriculumVitae;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/curriculumVitaes")
@@ -17,52 +20,27 @@ public class CurriculumVitaesController {
     public CurriculumVitaesController(CurriculumVitaeService curriculumVitaeService) { this.curriculumVitaeService = curriculumVitaeService; }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = curriculumVitaeService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<CurriculumVitae>> getAll(){
+        return curriculumVitaeService.getAll();
     }
 
     @GetMapping("/getByJobSeekerId")
-    public ResponseEntity<?> getByJobSeekerId(@RequestParam Integer jobSeekerId){
-        var result = curriculumVitaeService.getByJobSeekerId(jobSeekerId);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<CurriculumVitae> getByJobSeekerId(@RequestParam Integer jobSeekerId){
+        return curriculumVitaeService.getByJobSeekerId(jobSeekerId);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody CurriculumVitae curriculumVitae){
-        var result = curriculumVitaeService.add(curriculumVitae);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result add(@RequestBody CurriculumVitae curriculumVitae){
+        return curriculumVitaeService.add(curriculumVitae);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(@RequestBody CurriculumVitae curriculumVitae){
-        var result = curriculumVitaeService.delete(curriculumVitae);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result delete(@RequestBody CurriculumVitae curriculumVitae){
+        return curriculumVitaeService.delete(curriculumVitae);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody CurriculumVitae curriculumVitae){
-        var result = curriculumVitaeService.update(curriculumVitae);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result update(@RequestBody CurriculumVitae curriculumVitae){
+        return curriculumVitaeService.update(curriculumVitae);
     }
 }

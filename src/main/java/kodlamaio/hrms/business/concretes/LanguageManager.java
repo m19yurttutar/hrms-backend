@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.LanguageService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -26,26 +27,26 @@ public class LanguageManager implements LanguageService {
 
     @Override
     public DataResult<List<Language>> getAll() {
-        return new SuccessDataResult<>(languageDao.findAll());
+        return new SuccessDataResult<>(languageDao.findAll(), Messages.languagesListed);
     }
 
     @Override
     public Result add(LanguageDto languageDto) {
         Language language = languageDtoToLanguageConverter(languageDto);
         languageDao.save(language);
-        return new SuccessResult();
+        return new SuccessResult(Messages.languageAdded);
     }
 
     @Override
     public Result delete(Language language) {
         languageDao.delete(language);
-        return new SuccessResult();
+        return new SuccessResult(Messages.languageDeleted);
     }
 
     @Override
     public Result update(Language language) {
         languageDao.save(language);
-        return new SuccessResult();
+        return new SuccessResult(Messages.languageUpdated);
     }
 
     //This method converts the LanguageDto object into a form that the database will recognize.

@@ -1,12 +1,15 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.LanguageService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Language;
 import kodlamaio.hrms.entities.dtos.LanguageDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/languages")
@@ -18,42 +21,23 @@ public class LanguagesController {
     public LanguagesController(LanguageService languageService) { this.languageService = languageService; }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = languageService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<Language>> getAll(){
+        return languageService.getAll();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody LanguageDto languageDto){
-        var result = languageService.add(languageDto);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result add(@RequestBody LanguageDto languageDto){
+        return languageService.add(languageDto);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(@RequestBody Language language){
-        var result = languageService.delete(language);
+    public Result delete(@RequestBody Language language){
+        return languageService.delete(language);
 
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Language language){
-        var result = languageService.update(language);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result update(@RequestBody Language language){
+        return languageService.update(language);
     }
 }

@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.GenderService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.dataAccess.abstracts.GenderDao;
@@ -22,6 +23,6 @@ public class GenderManager implements GenderService {
 
     @Override
     public DataResult<List<Gender>> getAll() {
-        return new SuccessDataResult<>(genderDao.findAll());
+        return new SuccessDataResult<>(genderDao.findAll(), Messages.gendersListed);
     }
 }

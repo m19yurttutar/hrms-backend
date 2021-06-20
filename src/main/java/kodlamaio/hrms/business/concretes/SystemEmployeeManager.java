@@ -8,9 +8,8 @@ import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.SystemEmployeeDao;
 import kodlamaio.hrms.entities.concretes.*;
-import kodlamaio.hrms.entities.dtos.SkillDto;
 import kodlamaio.hrms.entities.dtos.SystemEmployeeDto;
-import org.aspectj.bridge.Message;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

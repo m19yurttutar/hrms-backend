@@ -1,12 +1,15 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.SchoolService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.School;
 import kodlamaio.hrms.entities.dtos.SchoolDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/schools")
@@ -18,52 +21,27 @@ public class SchoolsController {
     public SchoolsController(SchoolService schoolService) { this.schoolService = schoolService; }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = schoolService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<School>> getAll(){
+        return schoolService.getAll();
     }
 
     @GetMapping("/getByCurriculumVitaeJobSeekerIdSortedByGraduationYear")
-    public ResponseEntity<?> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId){
-        var result = schoolService.getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(jobSeekerId);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<School>> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId){
+        return schoolService.getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(jobSeekerId);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody SchoolDto schoolDto){
-        var result = schoolService.add(schoolDto);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result add(@RequestBody SchoolDto schoolDto){
+        return schoolService.add(schoolDto);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(@RequestBody School school){
-        var result = schoolService.delete(school);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result delete(@RequestBody School school){
+        return schoolService.delete(school);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody School school){
-        var result = schoolService.update(school);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result update(@RequestBody School school){
+        return schoolService.update(school);
     }
 }

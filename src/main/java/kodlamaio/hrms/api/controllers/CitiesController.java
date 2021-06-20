@@ -1,16 +1,20 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.CityService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.entities.concretes.City;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cities")
 @CrossOrigin
 public class CitiesController {
 
-    private CityService cityService;
+    private final CityService cityService;
 
     @Autowired
     public CitiesController(CityService cityService){
@@ -18,12 +22,7 @@ public class CitiesController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = cityService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<City>> getAll(){
+        return cityService.getAll();
     }
 }

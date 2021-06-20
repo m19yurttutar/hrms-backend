@@ -1,12 +1,15 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.ConnectionService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Connection;
 import kodlamaio.hrms.entities.dtos.ConnectionDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/connections")
@@ -18,42 +21,22 @@ public class ConnectionsController {
     public ConnectionsController(ConnectionService connectionService) { this.connectionService = connectionService; }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = connectionService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<Connection>> getAll(){
+        return connectionService.getAll();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody Connection connection){
-        var result = connectionService.add(connection);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result add(@RequestBody Connection connection){
+        return connectionService.add(connection);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(@RequestBody Connection connection){
-        var result = connectionService.delete(connection);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result delete(@RequestBody Connection connection){
+        return connectionService.delete(connection);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody ConnectionDto connectionDto){
-        var result = connectionService.update(connectionDto);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result update(@RequestBody ConnectionDto connectionDto){
+        return connectionService.update(connectionDto);
     }
 }

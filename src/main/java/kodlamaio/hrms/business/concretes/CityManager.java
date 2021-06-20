@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.CityService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.dataAccess.abstracts.CityDao;
@@ -22,6 +23,6 @@ public class CityManager implements CityService {
 
     @Override
     public DataResult<List<City>> getAll() {
-        return new SuccessDataResult<>(cityDao.findAll(), "Şehirler listelendi.");
+        return new SuccessDataResult<>(cityDao.findAll(), Messages.citiesListed);
     }
 }

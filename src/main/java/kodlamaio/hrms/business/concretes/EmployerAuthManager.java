@@ -5,9 +5,10 @@ import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.validationRules.Validator;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.validation.ValidationRules;
-import kodlamaio.hrms.entities.concretes.*;
+import kodlamaio.hrms.entities.concretes.Employer;
+import kodlamaio.hrms.entities.concretes.ProfilePhoto;
 import kodlamaio.hrms.entities.dtos.EmployerDto;
-import kodlamaio.hrms.entities.dtos.JobSeekerDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

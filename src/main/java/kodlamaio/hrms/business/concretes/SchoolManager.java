@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.SchoolService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -27,32 +28,32 @@ public class SchoolManager implements SchoolService {
 
     @Override
     public DataResult<List<School>> getAll() {
-        return new SuccessDataResult<>(schoolDao.findAll());
+        return new SuccessDataResult<>(schoolDao.findAll(), Messages.schoolsListed);
     }
 
     @Override
     public DataResult<List<School>> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId) {
         Sort sort = Sort.by(Sort.Direction.DESC, "graduationYear");
-        return new SuccessDataResult<>(schoolDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort));
+        return new SuccessDataResult<>(schoolDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort), Messages.schoolsListed);
     }
 
     @Override
     public Result add(SchoolDto schoolDto) {
         School school = schoolDtoToSchoolConverter(schoolDto);
         schoolDao.save(school);
-        return new SuccessResult();
+        return new SuccessResult(Messages.schoolAdded);
     }
 
     @Override
     public Result delete(School school) {
         schoolDao.delete(school);
-        return new SuccessResult();
+        return new SuccessResult(Messages.schoolDeleted);
     }
 
     @Override
     public Result update(School school) {
         schoolDao.save(school);
-        return new SuccessResult();
+        return new SuccessResult(Messages.schoolUpdated);
     }
 
     //This method converts the SchoolDto object into a form that the database will recognize.

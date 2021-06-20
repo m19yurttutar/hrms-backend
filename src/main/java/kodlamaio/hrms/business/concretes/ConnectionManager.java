@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.ConnectionService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -25,26 +26,26 @@ public class ConnectionManager implements ConnectionService {
 
     @Override
     public DataResult<List<Connection>> getAll() {
-        return new SuccessDataResult<>(connectionDao.findAll());
+        return new SuccessDataResult<>(connectionDao.findAll(), Messages.connectionsListed);
     }
 
     @Override
     public Result add(Connection connection) {
         connectionDao.save(connection);
-        return new SuccessResult();
+        return new SuccessResult(Messages.connectionAdded);
     }
 
     @Override
     public Result delete(Connection connection) {
         connectionDao.delete(connection);
-        return new SuccessResult();
+        return new SuccessResult(Messages.connectionDeleted);
     }
 
     @Override
     public Result update(ConnectionDto connectionDto) {
         Connection connection = connectionDtoToConnectionConverter(connectionDto);
         connectionDao.save(connection);
-        return new SuccessResult();
+        return new SuccessResult(Messages.connectionUpdated);
     }
 
     //This method converts the ConnectionDto object into a form that the database will recognize.

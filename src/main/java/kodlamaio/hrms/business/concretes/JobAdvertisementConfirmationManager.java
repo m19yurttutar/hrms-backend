@@ -9,8 +9,7 @@ import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.JobAdvertisementConfirmationDao;
 import kodlamaio.hrms.entities.concretes.*;
 import kodlamaio.hrms.entities.dtos.JobAdvertisementConfirmationDto;
-import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
-import org.aspectj.bridge.Message;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +37,7 @@ public class JobAdvertisementConfirmationManager implements JobAdvertisementConf
         JobAdvertisementConfirmation jobAdvertisementConfirmation = jobAdvertisementConfirmationDtoToJobAdvertisementConfirmationConverter(jobAdvertisementConfirmationDto);
 
         jobAdvertisementConfirmationDao.save(jobAdvertisementConfirmation);
-        return new SuccessResult(Messages.jobAdvertisementUpdated);
+        return new SuccessResult(Messages.jobAdvertisementConfirmationUpdated);
     }
 
     //This method converts the JobAdvertisementConfirmationDto object into a form that the database will recognize.
@@ -46,6 +45,6 @@ public class JobAdvertisementConfirmationManager implements JobAdvertisementConf
 
         int currentUserId = 4;
 
-        return new JobAdvertisementConfirmation(jobAdvertisementConfirmationDto.getJobAdvertisementId(), new SystemEmployee(4), jobAdvertisementConfirmationDto.isConfirmationStatus(), LocalDate.now());
+        return new JobAdvertisementConfirmation(jobAdvertisementConfirmationDto.getJobAdvertisementId(), new SystemEmployee(currentUserId), jobAdvertisementConfirmationDto.isConfirmationStatus(), LocalDate.now());
     }
 }

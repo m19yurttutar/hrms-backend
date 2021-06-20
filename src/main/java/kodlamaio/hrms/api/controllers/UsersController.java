@@ -1,11 +1,14 @@
 package kodlamaio.hrms.api.controllers;
 
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.entities.concretes.User;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,42 +22,22 @@ public class UsersController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = userService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<User>> getAll(){
+        return userService.getAll();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody User user){
-        var result = userService.add(user);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result add(@RequestBody User user){
+        return userService.add(user);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(@RequestBody User user){
-        var result = userService.delete(user);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result delete(@RequestBody User user){
+        return userService.delete(user);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody User user){
-        var result = userService.update(user);
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public Result update(@RequestBody User user){
+        return userService.update(user);
     }
 }

@@ -1,19 +1,20 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.GenderService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.entities.concretes.Gender;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/genders")
 @CrossOrigin
 public class GendersController {
 
-    private GenderService genderService;
+    private final GenderService genderService;
 
     @Autowired
     public GendersController(GenderService genderService){
@@ -21,12 +22,7 @@ public class GendersController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = genderService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<Gender>> getAll(){
+        return genderService.getAll();
     }
 }

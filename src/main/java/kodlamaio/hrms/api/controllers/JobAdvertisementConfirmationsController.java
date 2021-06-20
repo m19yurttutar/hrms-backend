@@ -1,13 +1,15 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.JobAdvertisementConfirmationService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.JobAdvertisementConfirmation;
 import kodlamaio.hrms.entities.dtos.JobAdvertisementConfirmationDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobAdvertisementConfirmations")
@@ -20,13 +22,8 @@ public class JobAdvertisementConfirmationsController {
     public JobAdvertisementConfirmationsController(JobAdvertisementConfirmationService jobAdvertisementConfirmationService) { this.jobAdvertisementConfirmationService = jobAdvertisementConfirmationService; }
 
     @GetMapping("/getAll")
-    public ResponseEntity<?> getAll(){
-        var result = jobAdvertisementConfirmationService.getAll();
-
-        if (result.isSuccess()){
-            return ResponseEntity.ok(result);
-        }
-        return ResponseEntity.badRequest().body(result);
+    public DataResult<List<JobAdvertisementConfirmation>> getAll(){
+        return jobAdvertisementConfirmationService.getAll();
     }
 
     @PutMapping("/update")
