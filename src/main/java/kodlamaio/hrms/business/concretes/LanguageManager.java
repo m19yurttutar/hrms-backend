@@ -31,6 +31,11 @@ public class LanguageManager implements LanguageService {
     }
 
     @Override
+    public DataResult<List<Language>> getByJobSeekerIdSorted(Integer jobSeekerId) {
+        return new SuccessDataResult<>(languageDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId), Messages.languagesListed);
+    }
+
+    @Override
     public Result add(LanguageDto languageDto) {
         Language language = languageDtoToLanguageConverter(languageDto);
         languageDao.save(language);

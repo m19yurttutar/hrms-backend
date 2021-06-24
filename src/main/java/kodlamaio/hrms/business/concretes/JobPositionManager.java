@@ -26,38 +26,4 @@ public class JobPositionManager implements JobPositionService {
     public DataResult<List<JobPosition>> getAll() {
         return new SuccessDataResult<>(jobPositionDao.findAll(),Messages.jobPositionsListed);
     }
-
-    @Override
-    public Result add(JobPosition jobPosition) {
-
-        Result businessResult = BusinessRules.run(CheckIfJobPositionExists(jobPosition.getJobPositionName()));
-
-        if (businessResult != null){
-            return businessResult;
-        }
-
-        jobPositionDao.save(jobPosition);
-        return new SuccessResult(Messages.jobPositionAdded);
-    }
-
-    @Override
-    public Result delete(JobPosition jobPosition) {
-        jobPositionDao.delete(jobPosition);
-        return new SuccessResult(Messages.jobPositionDeleted);
-    }
-
-    @Override
-    public Result update(JobPosition jobPosition) {
-        jobPositionDao.save(jobPosition);
-        return new SuccessResult(Messages.jobPositionUpdated);
-    }
-
-    private Result CheckIfJobPositionExists(String jobPositionName){
-        var result = jobPositionDao.getByJobPositionName(jobPositionName);
-
-        if (result != null){
-            return new ErrorResult("Bu pozisyon adı zaten bulunmaktadır.");
-        }
-        return new SuccessResult();
-    }
 }

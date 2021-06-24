@@ -13,30 +13,38 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/skills")
+@CrossOrigin
 public class SkillsController {
 
     private final SkillService skillService;
 
     @Autowired
-    public SkillsController(SkillService skillService) { this.skillService = skillService; }
+    public SkillsController(SkillService skillService) {
+        this.skillService = skillService;
+    }
 
     @GetMapping("/getAll")
-    public DataResult<List<Skill>> getAll(){
+    public DataResult<List<Skill>> getAll() {
         return skillService.getAll();
     }
 
+    @GetMapping("/getByJobSeekerIdSorted")
+    public DataResult<List<Skill>> getByJobSeekerIdSorted(@RequestParam Integer jobSeekerId) {
+        return skillService.getByJobSeekerId(jobSeekerId);
+    }
+
     @PostMapping("/add")
-    public Result add(@RequestBody SkillDto skillDto){
+    public Result add(@RequestBody SkillDto skillDto) {
         return skillService.add(skillDto);
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody Skill skill){
+    public Result delete(@RequestBody Skill skill) {
         return skillService.delete(skill);
     }
 
     @PutMapping("/update")
-    public Result update(@RequestBody Skill skill){
+    public Result update(@RequestBody Skill skill) {
         return skillService.update(skill);
     }
 }

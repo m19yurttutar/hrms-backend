@@ -1,5 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kodlamaio.hrms.core.entities.concretes.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class JobSeeker extends User {
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "curriculum_vitae_id", referencedColumnName = "id")
     private CurriculumVitae curriculumVitae;

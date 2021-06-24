@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/workExperiences")
+@CrossOrigin
 public class WorkExperiencesController {
 
     private final WorkExperienceService workExperienceService;
@@ -25,9 +26,9 @@ public class WorkExperiencesController {
         return workExperienceService.getAll();
     }
 
-    @GetMapping("/getByCurriculumVitaeJobSeekerIdSortedByQuitYear")
-    public DataResult<List<WorkExperience>> getByCurriculumVitaeJobSeekerIdSortedByQuitYear(@RequestParam Integer jobSeekerId){
-        return workExperienceService.getByCurriculumVitaeJobSeekerIdSortedByQuitYear(jobSeekerId);
+    @GetMapping("/getByJobSeekerIdSorted")
+    public DataResult<List<WorkExperience>> getByJobSeekerIdSorted(@RequestParam Integer jobSeekerId){
+        return workExperienceService.getByJobSeekerIdSorted(jobSeekerId);
     }
 
     @PostMapping("/add")

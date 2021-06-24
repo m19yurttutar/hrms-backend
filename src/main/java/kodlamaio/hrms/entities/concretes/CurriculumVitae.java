@@ -40,7 +40,6 @@ public class CurriculumVitae {
     @OneToMany(mappedBy = "curriculumVitae")
     private List<Skill> skills;
 
-    @JsonIgnore
     @OneToOne(mappedBy = "curriculumVitae")
     private JobSeeker jobSeeker;
 

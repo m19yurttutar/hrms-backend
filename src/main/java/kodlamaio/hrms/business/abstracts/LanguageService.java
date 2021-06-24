@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface LanguageService {
     DataResult<List<Language>> getAll();
+    DataResult<List<Language>> getByJobSeekerIdSorted(Integer jobSeekerId);
     Result add(LanguageDto languageDto);
     Result delete(Language language);
     Result update(Language language);

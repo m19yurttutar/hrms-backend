@@ -30,8 +30,8 @@ public class WorkExperienceManager implements WorkExperienceService {
     }
 
     @Override
-    public DataResult<List<WorkExperience>> getByCurriculumVitaeJobSeekerIdSortedByQuitYear(Integer jobSeekerId) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "quitYear");
+    public DataResult<List<WorkExperience>> getByJobSeekerIdSorted(Integer jobSeekerId) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "startYear");
         return new SuccessDataResult<>(workExperienceDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort), Messages.workingExperiencesListed);
     }
 

@@ -31,6 +31,11 @@ public class SkillManager implements SkillService {
     }
 
     @Override
+    public DataResult<List<Skill>> getByJobSeekerId(Integer jobSeekerId) {
+        return new SuccessDataResult<>(skillDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId), Messages.skillsListed);
+    }
+
+    @Override
     public Result add(SkillDto skillDto) {
         Skill skill = skillDtoToSkillConverter(skillDto);
         skillDao.save(skill);

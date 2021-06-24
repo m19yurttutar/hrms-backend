@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SchoolService {
     DataResult<List<School>> getAll();
-    DataResult<List<School>> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId);
+    DataResult<List<School>> getByJobSeekerIdSorted(Integer jobSeekerId);
     Result add(SchoolDto schoolDto);
     Result delete(School school);
     Result update(School school);

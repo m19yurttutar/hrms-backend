@@ -8,7 +8,4 @@ import java.util.List;
 
 public interface JobPositionService {
     DataResult<List<JobPosition>> getAll();
-    Result add(JobPosition jobPosition);
-    Result delete(JobPosition jobPosition);
-    Result update(JobPosition jobPosition);
 }

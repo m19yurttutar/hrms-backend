@@ -61,7 +61,7 @@ public class ProfilePhotoManager implements ProfilePhotoService {
     //This method converts the ProfilePhotoDto object into a form that the database will recognize.
     private ProfilePhoto profilePhotoDtoToProfilePhotoConverter(ProfilePhotoDto profilePhotoDto){
         //This value will hold the profilePhotoId of the logged-in user when the JSON Web Token was written.
-        int profilePhotoId = 5;
+        int profilePhotoId = 1;
 
         return new ProfilePhoto(profilePhotoId, profilePhotoDto.getName(), profilePhotoDto.getUrl(), profilePhotoDto.getPublicId());
     }

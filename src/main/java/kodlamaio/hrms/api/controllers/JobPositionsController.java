@@ -24,19 +24,4 @@ public class JobPositionsController {
     public DataResult<List<JobPosition>> getAll(){
         return jobPositionService.getAll();
     }
-
-    @PostMapping("/add")
-    public Result add(@RequestBody JobPosition jobPosition){
-        return jobPositionService.add(jobPosition);
-    }
-
-    @DeleteMapping("/delete")
-    public Result delete(@RequestBody JobPosition jobPosition){
-        return jobPositionService.delete(jobPosition);
-    }
-
-    @PutMapping("/update")
-    public Result update(@RequestBody JobPosition jobPosition){
-        return jobPositionService.update(jobPosition);
-    }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/schools")
+@CrossOrigin
 public class SchoolsController {
 
     private final SchoolService schoolService;
@@ -25,9 +26,9 @@ public class SchoolsController {
         return schoolService.getAll();
     }
 
-    @GetMapping("/getByCurriculumVitaeJobSeekerIdSortedByGraduationYear")
-    public DataResult<List<School>> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId){
-        return schoolService.getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(jobSeekerId);
+    @GetMapping("/getByJobSeekerIdSorted")
+    public DataResult<List<School>> getByJobSeekerIdSorted(@RequestParam Integer jobSeekerId){
+        return schoolService.getByJobSeekerIdSorted(jobSeekerId);
     }
 
     @PostMapping("/add")

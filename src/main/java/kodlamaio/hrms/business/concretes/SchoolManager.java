@@ -32,8 +32,8 @@ public class SchoolManager implements SchoolService {
     }
 
     @Override
-    public DataResult<List<School>> getByCurriculumVitaeJobSeekerIdSortedByGraduationYear(Integer jobSeekerId) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "graduationYear");
+    public DataResult<List<School>> getByJobSeekerIdSorted(Integer jobSeekerId) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "startYear");
         return new SuccessDataResult<>(schoolDao.getByCurriculumVitae_JobSeeker_Id(jobSeekerId, sort), Messages.schoolsListed);
     }
 
